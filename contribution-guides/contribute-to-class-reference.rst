@@ -263,6 +263,32 @@ Here is an example with the Node2D class:
                 </description>
             </method>
         </methods>
+        <members>
+		<member name="global_position" type="Vector2" setter="set_global_position" getter="get_global_position" brief="">
+		</member>
+		<member name="global_rotation" type="float" setter="set_global_rotation" getter="get_global_rotation" brief="">
+		</member>
+		<member name="global_rotation_deg" type="float" setter="set_global_rotation_in_degrees" getter="get_global_rotation_in_degrees" brief="">
+		</member>
+		<member name="global_scale" type="Vector2" setter="set_global_scale" getter="get_global_scale" brief="">
+		</member>
+		<member name="global_transform" type="Transform2D" setter="set_global_transform" getter="get_global_transform" brief="">
+		</member>
+		<member name="position" type="Vector2" setter="set_position" getter="get_position" brief="">
+		</member>
+		<member name="rotation" type="float" setter="set_rotation" getter="get_rotation" brief="">
+		</member>
+		<member name="rotation_deg" type="float" setter="set_rotation_in_degrees" getter="get_rotation_in_degrees" brief="">
+		</member>
+		<member name="scale" type="Vector2" setter="set_scale" getter="get_scale" brief="">
+		</member>
+		<member name="transform" type="Transform2D" setter="set_transform" getter="get_transform" brief="">
+		</member>
+		<member name="z" type="int" setter="set_z" getter="get_z" brief="">
+		</member>
+		<member name="z_as_relative" type="bool" setter="set_z_as_relative" getter="is_z_relative" brief="">
+		</member>
+	</members>
         <constants>
         </constants>
     </class>
