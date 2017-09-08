@@ -87,7 +87,7 @@ Each time you want to sync your branch to the state of the upstream repository, 
 
 ::
 
-    git pull --rebase upstream/master
+    git pull --rebase upstream master
 
 This command will first ``fetch``, or download the latest version of the Godot repository. Then, it will reapply your local changes on top.
 
@@ -96,9 +96,9 @@ If you made changes you don't want to keep in your local branch, use the followi
 ::
 
     git fetch upstream
-    git reset --hard upstream/master
+    git reset --hard upstream master
 
-**Warning:** The above command will reset your branch to the state of the ``upstream/master`` branch. It will discard all local changes. Make sure to only run this *before* you make important changes.
+**Warning:** The above command will reset your branch to the state of the ``upstream master`` branch. It will discard all local changes. Make sure to only run this *before* you make important changes.
 
 Another option is to delete the branch you're working on, synchronize the master branch with the Godot repository, and create a brand new branch:
 
@@ -106,7 +106,7 @@ Another option is to delete the branch you're working on, synchronize the master
 
     git checkout master
     git branch -d your-new-branch-name
-    git pull --rebase upstream/master
+    git pull --rebase upstream master
     git checkout -b your-new-branch-name
 
 If you're feeling lost by now, come to our `IRC channels <http://webchat.freenode.net/?channels=#godotengine>`_ and ask for help. Experienced git users will give you a hand.
