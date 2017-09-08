@@ -77,3 +77,18 @@ Use "Returns". Notice the exception to the "direct voice" rule: in the move meth
 Vector2 move ( Vector2 rel_vec )
 [...] Returns the remaining movement before the body was stopped.
 ```
+
+## Common vocabulary
+
+The developers chose some specific words to refer to areas of the interface. They're used in the sources, in the documentation, and you should always use them instead of synonyms, so the users know what you're talking about.
+
+![Overview of the interface and common vocabulary](./img/editor-vocabulary-overview.png)
+
+In the top left corner of the editor lie the `main menus`. In the center, the buttons change the `workspace`. And together, the buttons in the top right are the `playtest buttons`.
+The area in the center, that displays the 2d or the 3d space, is the `viewport`. At its top, you find a list of `tools` inside the `toolbar`.
+
+The tabs or dockable panels on either side of the viewport are `docks`. You have the `FileSystem dock`, the `Scene dock` that contains your scene tree, the `Import dock`, the `Node dock`, and the `Inspector` or `Inspector dock`. With the default layout, you may call the tabbed docks `tabs`: the `Scene tab`, the `Node tab`...
+
+The Animation, Debugger etc. at the bottom of the viewport are `panels`. Together, they make up the `bottom panels`.
+
+Foldable areas of the Inspector are `sections`. The node's parent class names, which you can't fold, are `Classes`, e.g. the `KinematicBody2D class`. And individual lines with key-value pairs are `properties`. E.g. `position` or `modulate color` are both `properties`.
