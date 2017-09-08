@@ -145,17 +145,31 @@ repository:
 
 When it's done, you can ask for a Pull Request via the GitHub UI of your Godot fork.
 
-Editing the doc/base/classes.xml file
--------------------------------------
+How to edit classes.xml
+-----------------------
 
-This file is generated and updated by Godot Engine. It is used by the editor as base for the Help section.
+Edit the file doc/base/classes.xml to update the class reference. It lists all the classes, constants and methods in the class reference. Godot generates and updates it automatically.
 
-You can edit this file using your favourite text editor. If you use a code editor, make sure that it won't needlessly change the indentation behaviour (e.g. change all tabs to spaces).
+Edit it using your favourite text editor. If you use a code editor, make sure that it doesn't change the indent style. E.g. change all tabs to spaces.
 
-Formatting of the XML file
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+How to write the class reference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Here is an example with the Node2D class:
+Each class has a brief and a long description. The brief description is always at the top of the page, while the full description lies below the list of methods, variables and constants. Methods, member variables, constants and signals are in separate categories or XML nodes. For each, learn how they work in Godot's source code, and fill their <description>.
+
+Our job is to add the missing text between these marks:
+
+-  <description></description>
+-  <brief_description></brief_description>
+-  <constant></constant>
+-  <member></member>
+-  <signal></signal>
+
+Write in a clear and simple language. Always follow the :ref:`class_reference_styleguide` to keep your descriptions short and easy to read. **Do not leave empty lines** in the descriptions: each line in the XML file will result in a new paragraph. 
+
+For setters and getters, describe what the setter does in-depth, and only say the minimum in the getter to avoid content duplication. Setters and getters are methods that starts with set\_ or get\_.
+
+Here's how a class looks like in XML:
 
 .. code:: xml
 
@@ -174,88 +188,7 @@ Here is an example with the Node2D class:
                 Set the position of the 2d node.
                 </description>
             </method>
-            <method name="set_rot">
-                <argument index="0" name="rot" type="float">
-                </argument>
-                <description>
-                Set the rotation of the 2d node.
-                </description>
-            </method>
-            <method name="set_scale">
-                <argument index="0" name="scale" type="Vector2">
-                </argument>
-                <description>
-                Set the scale of the 2d node.
-                </description>
-            </method>
-            <method name="get_pos" qualifiers="const">
-                <return type="Vector2">
-                </return>
-                <description>
-                Return the position of the 2D node.
-                </description>
-            </method>
-            <method name="get_rot" qualifiers="const">
-                <return type="float">
-                </return>
-                <description>
-                Return the rotation of the 2D node.
-                </description>
-            </method>
-            <method name="get_scale" qualifiers="const">
-                <return type="Vector2">
-                </return>
-                <description>
-                Return the scale of the 2D node.
-                </description>
-            </method>
-            <method name="rotate">
-                <argument index="0" name="degrees" type="float">
-                </argument>
-                <description>
-            </description>
-            </method>
-            <method name="move_local_x">
-                <argument index="0" name="delta" type="float">
-                </argument>
-                <argument index="1" name="scaled" type="bool" default="false">
-                </argument>
-                <description>
-                </description>
-            </method>
-            <method name="move_local_y">
-                <argument index="0" name="delta" type="float">
-                </argument>
-                <argument index="1" name="scaled" type="bool" default="false">
-                </argument>
-                <description>
-                </description>
-            </method>
-            <method name="get_global_pos" qualifiers="const">
-                <return type="Vector2">
-                </return>
-                <description>
-                Return the global position of the 2D node.
-                </description>
-            </method>
-            <method name="set_global_pos">
-                <argument index="0" name="arg0" type="Vector2">
-                </argument>
-                <description>
-                </description>
-            </method>
-            <method name="set_transform">
-                <argument index="0" name="xform" type="Matrix32">
-                </argument>
-                <description>
-                </description>
-            </method>
-            <method name="set_global_transform">
-                <argument index="0" name="xform" type="Matrix32">
-                </argument>
-                <description>
-                </description>
-            </method>
+            [...]
             <method name="edit_set_pivot">
                 <argument index="0" name="arg0" type="Vector2">
                 </argument>
@@ -264,76 +197,33 @@ Here is an example with the Node2D class:
             </method>
         </methods>
         <members>
-		<member name="global_position" type="Vector2" setter="set_global_position" getter="get_global_position" brief="">
-		</member>
-		<member name="global_rotation" type="float" setter="set_global_rotation" getter="get_global_rotation" brief="">
-		</member>
-		<member name="global_rotation_deg" type="float" setter="set_global_rotation_in_degrees" getter="get_global_rotation_in_degrees" brief="">
-		</member>
-		<member name="global_scale" type="Vector2" setter="set_global_scale" getter="get_global_scale" brief="">
-		</member>
-		<member name="global_transform" type="Transform2D" setter="set_global_transform" getter="get_global_transform" brief="">
-		</member>
-		<member name="position" type="Vector2" setter="set_position" getter="get_position" brief="">
-		</member>
-		<member name="rotation" type="float" setter="set_rotation" getter="get_rotation" brief="">
-		</member>
-		<member name="rotation_deg" type="float" setter="set_rotation_in_degrees" getter="get_rotation_in_degrees" brief="">
-		</member>
-		<member name="scale" type="Vector2" setter="set_scale" getter="get_scale" brief="">
-		</member>
-		<member name="transform" type="Transform2D" setter="set_transform" getter="get_transform" brief="">
-		</member>
-		<member name="z" type="int" setter="set_z" getter="get_z" brief="">
-		</member>
-		<member name="z_as_relative" type="bool" setter="set_z_as_relative" getter="is_z_relative" brief="">
-		</member>
-	</members>
+            <member name="global_position" type="Vector2" setter="set_global_position" getter="get_global_position" brief="">
+            </member>
+            [...]
+            <member name="z_as_relative" type="bool" setter="set_z_as_relative" getter="is_z_relative" brief="">
+            </member>
+        </members>
         <constants>
         </constants>
     </class>
 
-As you can see, some methods in this class have no description (i.e. there is no text between their marks). This can also happen for the ``description`` and ``brief_description`` of the class, but in our example they are already filled. Let's edit the description of the ``rotate()`` method:
 
-.. code:: xml
+Use a code editor like Vim, Atom, Code, Notepad++ or anything similar to edit the file quickly. Use the search function to find classes fast, and fold the XML to navigate it faster.
 
-    <method name="rotate">
-        <argument index="0" name="degrees" type="float">
-        </argument>
-        <description>
-        Rotates the node of a given number of degrees.
-        </description>
-    </method>
 
-That's all!
+Improve formatting with BBcode style tags
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-You simply have to write any missing text between these marks:
-
--  <description></description>
--  <brief_description></brief_description>
--  <constant></constant>
--  <member></member>
--  <signal></signal>
-
-Describe clearly and shortly what the method does, or what the constant, member variable or signal mean. You can include an example of use if needed. Try to use grammatically correct English, and check the other descriptions to get an impression of the writing style.
-
-For setters/getters, the convention is to describe in depth what the method does in the setter, and to say only the minimal in the getter to avoid duplication of the contents.
-
-Tags available for improved formatting
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-For more control over the formatting of the help, Godot's XML documentation supports various BBcode-like tags which are interpreted by both the offline in-editor Help, as well as the online documentation (via the reST converter).
-
-Those tags are listed below. See existing documentation entries for more examples of how to use them properly.
+Godot's class reference supports BBcode-like tags. They add nice formatting to the text. Here's the list of available tags:
 
 +---------------------------+--------------------------------+-----------------------------------+--------------------------------------------+
 | Tag                       | Effect                         | Usage                             | Result                                     |
 +===========================+================================+===================================+============================================+
 | [Class]                   | Link a class                   | Move the [Sprite].                | Move the :ref:`class_sprite`.              |
 +---------------------------+--------------------------------+-----------------------------------+--------------------------------------------+
-| [method methodname]       | Link a method of this class    | See [method set_pos].             | See :ref:`set_pos <class_node2d_set_pos>`. |
+| [method methodname]       | Link to a method in this class | See [method set_pos].             | See :ref:`set_pos <class_node2d_set_pos>`. |
 +---------------------------+--------------------------------+-----------------------------------+--------------------------------------------+
-| [method Class.methodname] | Link a method of another class | See [method Node2D.set_pos].      | See :ref:`set_pos <class_node2d_set_pos>`. |
+| [method Class.methodname] | Link to another class's method | See [method Node2D.set_pos].      | See :ref:`set_pos <class_node2d_set_pos>`. |
 +---------------------------+--------------------------------+-----------------------------------+--------------------------------------------+
 | [b] [/b]                  | Bold                           | Some [b]bold[/b] text.            | Some **bold** text.                        |
 +---------------------------+--------------------------------+-----------------------------------+--------------------------------------------+
@@ -344,7 +234,7 @@ Those tags are listed below. See existing documentation entries for more example
 | [codeblock] [/codeblock]  | Multiline preformatted block   | *See below.*                      | *See below.*                               |
 +---------------------------+--------------------------------+-----------------------------------+--------------------------------------------+
 
-The ``[codeblock]`` is meant to be used for pre-formatted code block, using spaces as indentation (tabs will be removed by the reST converter). For example:
+Use ``[codeblock]`` for pre-formatted code blocks, using spaces for indentation (the parser will delete tabs). Example:
 
 .. code:: xml
 
@@ -354,7 +244,7 @@ The ``[codeblock]`` is meant to be used for pre-formatted code block, using spac
         print(sprite.get_pos())
     [/codeblock]
 
-Which would be rendered as:
+Will display as:
 
 ::
 
@@ -362,12 +252,13 @@ Which would be rendered as:
         var sprite = get_node("Sprite")
         print(sprite.get_pos())
 
+
 I don't know what this method does!
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Not a problem. Leave it behind for now, and don't forget to notify the missing methods when you request a pull of your changes. Another editor will take care of it.
+No problem. Leave it behind, and list the methods you skipped when you request a pull of your changes. Another writer will take care of it.
 
-If you wonder what a method does, you can still have a look at its implementation in Godot Engine's source code on GitHub. Also, if you have a doubt, feel free to ask on the `Q&A website <https://godotengine.org/qa/>`__ and on IRC (freenode, #godotengine).
+You can still have a look at the methods' implementation in Godot's source code on GitHub. Also, if you have doubts, feel free to ask on the `Q&A website <https://godotengine.org/qa/>`__ and on IRC (freenode, #godotengine).
 
 
 Localization
