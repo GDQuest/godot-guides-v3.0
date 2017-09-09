@@ -47,7 +47,7 @@ Position the node's pivot to the 'pivot' value. [...]
 
 ## Avoid verbs that end in -ing
 
-The progressive forms describe continuous actions. You don't need it to describe methods, that do their job instantly. Use simple present, preterit or future. 
+The progressive forms describe continuous actions. You don't need it to describe methods, that do their job instantly. Use simple present, preterit or future.
 
 ```
 Vector2 move ( Vector2 rel_vec )
@@ -61,6 +61,51 @@ Moves the body in the vector's direction. The body stops if it collides with an 
 
 Some verbs can also turn into adjectival nouns with -ing: `the remaining movement`, `the missing file`, etc. This is different, so feel free to use them.
 
+
+
+## Use explicit references
+
+Favor explicit references over implicit ones.
+
+Avoid using words like "the former", "the latter" etc. They're not the most common in English, and they require you to check the reference.
+
+``` markdown
+'w' and 'h' define right and bottom margins. The **latter** two resize the texture so it fits in the defined margin.
+```
+
+Don't be afraid of repetition in documentation or tutorials:
+
+``` markdown
+'w' and 'h' define right and bottom margins. **'w' and 'h'** resize the texture so it fits the margin.
+```
+
+## Abuse 's to show posession
+
+Avoid "The milk of the cat" feels unnatural in English. Write "The cat's milk" instead.
+
+``` markdown
+The region **of the AtlasTexture** that is used.
+```
+
+`'s` lets you put the main subject at the start of the sentence, and keep it short:
+
+``` markdown
+The **AtlasTexture's** used region.
+```
+
+## Remove unnecessary adverbs and adjectives.
+
+Write as few adjectives and adverbs as possible. Only use them if they add key information to the description.
+
+``` markdown
+**Basically** a big texture [...]
+```
+
+Ban adverbs like "basically", "effectively", adjectives like "actual". Words that lengthen the documentation but don't add any information.
+
+``` markdown
+A big texture [...]
+```
 
 ## Mention what methods return if it's useful
 
