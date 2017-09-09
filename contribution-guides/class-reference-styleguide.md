@@ -12,8 +12,8 @@ In short, always try to:
 1. Remove unnecessary adverbs and adjectives.
 1. Mention what methods return if it's useful
 
-
-## Use the direct voice
+## Writing guidelines
+### Use the direct voice
 
 Use the direct voice when possible. Take the classes, methods and constants you describe as the sentences' subject. It's natural to write using the passive voice, but it's harder to read and produces longer sentences.
 
@@ -32,7 +32,7 @@ void edit_set_pivot ( Vector2 pivot )
 ```
 
 
-## Use precise action verbs
+### Use precise action verbs
 
 Favor precise, yet common verbs over generic ones like `make`, `set`, and any expression you can replace with a single word:
 
@@ -48,7 +48,7 @@ void edit_set_pivot ( Vector2 pivot )
 Position the node's pivot to the 'pivot' value. [...]
 ```
 
-## Avoid verbs that end in -ing
+### Avoid verbs that end in -ing
 
 The progressive forms describe continuous actions. You don't need it to describe methods, that do their job instantly. Use simple present, preterit or future.
 
@@ -66,7 +66,7 @@ Some verbs can also turn into adjectival nouns with -ing: `the remaining movemen
 
 
 
-## Use explicit references
+### Use explicit references
 
 Favor explicit references over implicit ones.
 
@@ -82,7 +82,7 @@ Don't be afraid of repetition in documentation or tutorials:
 'w' and 'h' define right and bottom margins. **'w' and 'h'** resize the texture so it fits the margin.
 ```
 
-## Abuse 's to show posession
+### Abuse 's to show posession
 
 Avoid "The milk of the cat" feels unnatural in English. Write "The cat's milk" instead.
 
@@ -96,7 +96,7 @@ The region **of the AtlasTexture** that is used.
 The **AtlasTexture's** used region.
 ```
 
-## Remove unnecessary adverbs and adjectives.
+### Remove unnecessary adverbs and adjectives.
 
 Write as few adjectives and adverbs as possible. Only use them if they add key information to the description.
 
@@ -110,7 +110,7 @@ Ban adverbs like "basically", "effectively", adjectives like "actual". Words tha
 A big texture [...]
 ```
 
-## Mention what methods return if it's useful
+### Mention what methods return if it's useful
 
 Some methods return important values. Describe them at the end of the description, ideally on a new line. No need to mention the return values for any method whose name starts with `set` or `get`.
 
