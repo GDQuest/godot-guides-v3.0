@@ -2,9 +2,8 @@
 
 The Godot community is rich and international. Users come from all around the world. Some of them are young, and many aren't native English speakers. That's why we must all write using a clear and a common language. For the class reference, the goal is to make it easy to read for everyone and precise.
 
-A technical writer's job is to pack as much information as possible into the smallest and clearest sentences possible. These guidelines will help you work towards that goal.
 
-Always try to:
+In summary, always try to:
 
 1. Use the direct voice
 1. Use precise action verbs
@@ -13,10 +12,17 @@ Always try to:
 1. Ban these 8 words
 1. Use explicit references
 1. Abuse 's to show posession
+
+There are 3 rules on how to describe classes:
+
+1. Give an overview of the node in the brief description
 1. Mention what methods return if it's useful
 1. Use "if true" to describe booleans
 
-## Writing guidelines
+## 7 Rules for a Clear English
+
+A technical writer's job is to pack as much information as possible into the smallest and clearest sentences possible. These guidelines will help you work towards that goal.
+
 ### Use the direct voice
 
 Use the direct voice when possible. Take the classes, methods, and constants you describe as the subject. It's natural to write using the passive voice, but it's harder to read and produces longer sentences.
@@ -168,6 +174,31 @@ The region **of the AtlasTexture** that is used.
 The **AtlasTexture's** used region.
 ```
 
+
+## How to Write Methods and Classes
+
+### Give an overview of the node in the brief description
+
+A class's brief description should explain what is the node's role and its functionality, in up to 200 characters. It's the most important sentence in the entire class reference. It's the user's first contact with a node:
+
+1. It's the only sentence that appears in the "Create New Node" dialog.
+1. It's at the top of every node page in the docs
+
+Bad:
+
+``` markdown
+Node2D
+Base node for 2D system.
+```
+
+Better:
+
+``` markdown
+Barebones 2d game object, parent of all 2D related nodes. Has a position, rotation, scale and z-index.
+```
+
+Use the full description to provide more information, and a code example, if possible.
+
 ### Mention what methods return if it's useful
 
 Some methods return important values. Describe them at the end of the description, ideally on a new line. No need to mention the return values for any method whose name starts with `set` or `get`.
@@ -193,7 +224,7 @@ Timer.autostart
 If `true`, the timer will automatically start when it enters the scene tree. Default value: `false`.
 ```
 
-## Common vocabulary
+## Common Vocabulary to Use in Godot's Docs
 
 The developers chose some specific words to refer to areas of the interface. They're used in the sources, in the documentation, and you should always use them instead of synonyms, so the users know what you're talking about.
 
