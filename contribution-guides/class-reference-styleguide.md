@@ -2,7 +2,7 @@
 
 The Godot community is rich and international. Users come from all around the world. Some of them are young, and many aren't native English speakers. That's why we must all write using a clear and a common language. For the class reference, the goal is to make it easy to read for everyone and precise.
 
-In short always try to:
+Always try to:
 
 1. Use the direct voice
 1. Use precise action verbs
@@ -15,7 +15,7 @@ In short always try to:
 ## Writing guidelines
 ### Use the direct voice
 
-Use the direct voice when possible. Take the classes, methods, and constants you describe as the sentence subject. It's natural to write using the passive voice, but it's harder to read and produces longer sentences.
+Use the direct voice when possible. Take the classes, methods, and constants you describe as the subject. It's natural to write using the passive voice, but it's harder to read and produces longer sentences.
 
 Most of Godot 2's API documentation uses the passive voice:
 
@@ -24,7 +24,7 @@ void edit_set_pivot ( Vector2 pivot )
 [...] This method is implemented only in some nodes that inherit Node2D.
 ```
 
-You can use the node names as nouns:
+You can use the node's name as a noun:
 
 ```
 void edit_set_pivot ( Vector2 pivot )
