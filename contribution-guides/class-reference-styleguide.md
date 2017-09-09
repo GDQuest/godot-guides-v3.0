@@ -7,6 +7,9 @@ In short, always try to:
 1. Use the direct voice
 1. Use precise action verbs
 1. Avoid verbs that end in -ing
+1. Use explicit references
+1. Abuse 's to show posession
+1. Remove unnecessary adverbs and adjectives.
 1. Mention what methods return if it's useful
 
 
