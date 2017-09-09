@@ -2,15 +2,19 @@
 
 The Godot community is rich and international. Users come from all around the world. Some of them are young, and many aren't native English speakers. That's why we must all write using a clear and a common language. For the class reference, the goal is to make it easy to read for everyone and precise.
 
+A technical writer's job is to pack as much information as possible into the smallest and clearest sentences possible. These guidelines will help you work towards that goal.
+
 Always try to:
 
 1. Use the direct voice
 1. Use precise action verbs
 1. Avoid verbs that end in -ing
+1. Remove unnecessary adverbs and adjectives.
+1. Ban these 8 words
 1. Use explicit references
 1. Abuse 's to show posession
-1. Remove unnecessary adverbs and adjectives.
 1. Mention what methods return if it's useful
+1. Use "if true" to describe booleans
 
 ## Writing guidelines
 ### Use the direct voice
@@ -66,6 +70,74 @@ Some verbs can also turn into adjectival nouns with -ing: `the remaining movemen
 
 
 
+### Remove unnecessary adverbs and adjectives
+
+Write as few adjectives and adverbs as possible. Only use them if they add key information to the description.
+
+``` markdown
+**Basically** a big texture [...]
+```
+
+Ban adverbs like "basically", "effectively", and adjectives like "actual". Words that lengthen the documentation but don't add any information.
+
+``` markdown
+A big texture [...]
+```
+
+### Ban these 8 words
+
+Never use these 8 banned words:
+
+1. obvious
+1. simple
+1. basic
+1. easy
+1. actual
+1. just
+1. clear
+1. however (some uses)
+
+Game creation and programming aren't simple, and nothing's easy to someone learning to use the API for the first time. Other words in the list, like `just` or `actual` won't add any info to the sentence. Don't use corresponding adverbs either: obviously, simply, basically, easily, actually, clearly.
+
+Some examples:
+
+``` markdown
+**TextureRect**
+Control frame that **simply** draws an assigned texture. It can stretch or not. It's a **simple** way to **just** show an image in a UI.
+```
+
+The banned words lengthen the description and take attention away from the most important info:
+
+``` markdown
+[Control] node that displays a texture. The texture can stretch to the node's bounding box or stay in the center. Useful to display sprites in your UIs.
+```
+
+"Simple" never helps. Remember, for other users, anything could be complex or frustrate them. There's nothing like a good old *it's simple* to make you cringe. Here's the old brief description, the first sentence on the Timer node's page:
+
+``` markdown
+**Timer**
+A simple Timer node.
+```
+
+Instead, you want to explain what the node does:
+
+``` markdown
+Calls a function of your choice after a certain duration.
+```
+
+On a similar note, "basic" is too vague:
+
+``` markdown
+**Vector3**
+Vector class, which performs basic 3D vector math operations.
+```
+
+The brief description is a good occasion to offer an overview of the node:
+
+``` markdown
+Provides essential math functions to manipulate 3d vectors: cross product, normalize, rotate, etc.
+```
+
 ### Use explicit references
 
 Favor explicit references over implicit ones.
@@ -96,20 +168,6 @@ The region **of the AtlasTexture** that is used.
 The **AtlasTexture's** used region.
 ```
 
-### Remove unnecessary adverbs and adjectives.
-
-Write as few adjectives and adverbs as possible. Only use them if they add key information to the description.
-
-``` markdown
-**Basically** a big texture [...]
-```
-
-Ban adverbs like "basically", "effectively", and adjectives like "actual". Words that lengthen the documentation but don't add any information.
-
-``` markdown
-A big texture [...]
-```
-
 ### Mention what methods return if it's useful
 
 Some methods return important values. Describe them at the end of the description, ideally on a new line. No need to mention the return values for any method whose name starts with `set` or `get`.
@@ -124,6 +182,15 @@ Use "Returns". Notice the exception to the "direct voice" rule: in the move meth
 ```
 Vector2 move ( Vector2 rel_vec )
 [...] Returns the remaining movement before the body was stopped.
+```
+
+### Use "if true" to describe booleans
+
+For boolean member variables, always use `if true` and/or `if false`, to stay explicit. `Controls whether or not` may be ambiguous and won't work for every member variable:
+
+``` markdown
+Timer.autostart
+If `true`, the timer will automatically start when it enters the scene tree. Default value: `false`.
 ```
 
 ## Common vocabulary
