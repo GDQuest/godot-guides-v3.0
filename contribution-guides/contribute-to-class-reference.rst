@@ -7,7 +7,7 @@ Godot ships with many nodes and singletons to help you develop your games in GDs
 
 But it's incomplete. Many methods, variables and signals lack descriptions. Others changed with recent releases and need updates. The developers can't write the entire reference on their own. Godot needs you, all of us, to contribute.
 
-**Important:** we use `a collaborative document <https://etherpad.net/p/godot-classref-status>`_ to track who's working on what class. Always notify other writers about what you are working on. You'll find the instructions in the doc.
+**Important:** we use `a collaborative document <https://hackmd.io/s/H1es51Oeqb>`_ to track who's working on what class. Always notify other writers about what you are working on. You'll find the instructions in the doc.
 
 
 How to contribute
