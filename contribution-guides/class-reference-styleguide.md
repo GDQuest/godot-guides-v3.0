@@ -2,7 +2,7 @@
 
 The Godot community is rich and international. Users come from all around the world. Some of them are young, and many aren't native English speakers. That's why we must all write using a clear and a common language. For the class reference, the goal is to make it easy to read for everyone and precise.
 
-In short, always try to:
+In short always try to:
 
 1. Use the direct voice
 1. Use precise action verbs
@@ -15,7 +15,7 @@ In short, always try to:
 ## Writing guidelines
 ### Use the direct voice
 
-Use the direct voice when possible. Take the classes, methods and constants you describe as the sentences' subject. It's natural to write using the passive voice, but it's harder to read and produces longer sentences.
+Use the direct voice when possible. Take the classes, methods, and constants you describe as the sentence subject. It's natural to write using the passive voice, but it's harder to read and produces longer sentences.
 
 Most of Godot 2's API documentation uses the passive voice:
 
@@ -24,7 +24,7 @@ void edit_set_pivot ( Vector2 pivot )
 [...] This method is implemented only in some nodes that inherit Node2D.
 ```
 
-You can use the nodes' names as nouns:
+You can use the node names as nouns:
 
 ```
 void edit_set_pivot ( Vector2 pivot )
@@ -34,7 +34,7 @@ void edit_set_pivot ( Vector2 pivot )
 
 ### Use precise action verbs
 
-Favor precise, yet common verbs over generic ones like `make`, `set`, and any expression you can replace with a single word:
+Favor precise yet common verbs over generic ones like `make`, `set`, and any expression you can replace with a single word:
 
 ```
 void edit_set_pivot ( Vector2 pivot )
@@ -50,7 +50,7 @@ Position the node's pivot to the 'pivot' value. [...]
 
 ### Avoid verbs that end in -ing
 
-The progressive forms describe continuous actions. You don't need it to describe methods, that do their job instantly. Use simple present, preterit or future.
+The progressive forms describe continuous actions. You don't need it to describe methods that do their job instantly. Use simple present, preterit or future.
 
 ```
 Vector2 move ( Vector2 rel_vec )
@@ -62,7 +62,7 @@ Vector2 move ( Vector2 rel_vec )
 Moves the body in the vector's direction. The body stops if it collides with an obstacle. [...]
 ```
 
-Some verbs can also turn into adjectival nouns with -ing: `the remaining movement`, `the missing file`, etc. This is different, so feel free to use them.
+Some verbs can also turn into adjectival nouns with -ing: `the remaining movement`, `the missing file`, etc. This is different so feel free to use them.
 
 
 
@@ -70,7 +70,7 @@ Some verbs can also turn into adjectival nouns with -ing: `the remaining movemen
 
 Favor explicit references over implicit ones.
 
-Avoid using words like "the former", "the latter" etc. They're not the most common in English, and they require you to check the reference.
+Avoid using words like "the former", "the latter", etc. They're not the most common in English, and they require you to check the reference.
 
 ``` markdown
 'w' and 'h' define right and bottom margins. The **latter** two resize the texture so it fits in the defined margin.
@@ -104,7 +104,7 @@ Write as few adjectives and adverbs as possible. Only use them if they add key i
 **Basically** a big texture [...]
 ```
 
-Ban adverbs like "basically", "effectively", adjectives like "actual". Words that lengthen the documentation but don't add any information.
+Ban adverbs like "basically", "effectively", and adjectives like "actual". Words that lengthen the documentation but don't add any information.
 
 ``` markdown
 A big texture [...]
@@ -132,11 +132,11 @@ The developers chose some specific words to refer to areas of the interface. The
 
 ![Overview of the interface and common vocabulary](./img/editor-vocabulary-overview.png)
 
-In the top left corner of the editor lie the `main menus`. In the center, the buttons change the `workspace`. And together, the buttons in the top right are the `playtest buttons`.
+In the top left corner of the editor lie the `main menus`. In the center, the buttons change the `workspace`. And together the buttons in the top right are the `playtest buttons`.
 The area in the center, that displays the 2d or the 3d space, is the `viewport`. At its top, you find a list of `tools` inside the `toolbar`.
 
-The tabs or dockable panels on either side of the viewport are `docks`. You have the `FileSystem dock`, the `Scene dock` that contains your scene tree, the `Import dock`, the `Node dock`, and the `Inspector` or `Inspector dock`. With the default layout, you may call the tabbed docks `tabs`: the `Scene tab`, the `Node tab`...
+The tabs or dockable panels on either side of the viewport are `docks`. You have the `FileSystem dock`, the `Scene dock` that contains your scene tree, the `Import dock`, the `Node dock`, and the `Inspector` or `Inspector dock`. With the default layout you may call the tabbed docks `tabs`: the `Scene tab`, the `Node tab`...
 
-The Animation, Debugger etc. at the bottom of the viewport are `panels`. Together, they make up the `bottom panels`.
+The Animation, Debugger, etc. at the bottom of the viewport are `panels`. Together they make up the `bottom panels`.
 
-Foldable areas of the Inspector are `sections`. The node's parent class names, which you can't fold, are `Classes`, e.g. the `KinematicBody2D class`. And individual lines with key-value pairs are `properties`. E.g. `position` or `modulate color` are both `properties`.
+Foldable areas of the Inspector are `sections`. The node's parent class names, which you can't fold, are `Classes` e.g. the `KinematicBody2D class`. And individual lines with key-value pairs are `properties`. E.g. `position` or `modulate color` are both `properties`.
