@@ -1,0 +1,15 @@
+config_version=3
+
+[application]
+
+config/name="Responsive UI Design"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1366
+window/size/height=768
+
+[rendering]
+
+environment/default_environment="res://default_env.tres"
