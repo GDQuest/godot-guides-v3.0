@@ -1,4 +1,4 @@
-# Class Reference Writing Styleguide
+# Godot Docs Writing Guidelines
 
 The Godot community is rich and international. Users come from all around the world. Some of them are young, and many aren't native English speakers. That's why we must all write using a clear and a common language. For the class reference, the goal is to make it easy to read for everyone and precise.
 
@@ -27,31 +27,33 @@ A technical writer's job is to pack as much information as possible into the sma
 
 Use the direct voice when possible. Take the classes, methods, and constants you describe as the subject. It's natural to write using the passive voice, but it's harder to read and produces longer sentences.
 
-Most of Godot 2's API documentation uses the passive voice:
+**Don't** use the passive voice:
+
+```markdown
+void edit_set_pivot ( Vector2 pivot )
+[...] This method **is implemented** only in some nodes that inherit Node2D.
+```
+
+**Do** use the node's name as a noun:
 
 ```
 void edit_set_pivot ( Vector2 pivot )
-[...] This method is implemented only in some nodes that inherit Node2D.
-```
-
-You can use the node's name as a noun:
-
-```
-void edit_set_pivot ( Vector2 pivot )
-[...] Only some Node2Ds implement this method.
+[...] Only some Node2Ds **implement** this method.
 ```
 
 
 ### Use precise action verbs
 
-Favor precise yet common verbs over generic ones like `make`, `set`, and any expression you can replace with a single word:
+Favor precise yet common verbs over generic ones like `make`, `set`, and any expression you can replace with a single word.
+
+**Don't** repeat the method's name. It already states it sets the pivot value to a new one:
 
 ```
 void edit_set_pivot ( Vector2 pivot )
 Set the pivot position of the 2D node to ‘pivot’ value. [...]
 ```
 
-The method's name already states it sets the pivot value to a new one. The description should explain what's the consequence of this "set": to place or position for position, rotate, fade, etc.
+**Do** explain what's the consequence of this "set": use precise verbs like `place`, `position`, `rotate`, `fade`, etc.
 
 ```
 void edit_set_pivot ( Vector2 pivot )
@@ -60,31 +62,38 @@ Position the node's pivot to the 'pivot' value. [...]
 
 ### Avoid verbs that end in -ing
 
-The progressive forms describe continuous actions. You don't need it to describe methods that do their job instantly. Use simple present, preterit or future.
+The progressive forms describe continuous actions. E.g. "is calling", "is moving".
 
-```
+**Don't** use the progressive form for instant changes.
+
+``` markdown
 Vector2 move ( Vector2 rel_vec )
-Move the body in the given direction, stopping if there is an obstacle. [...]
+Move the body in the given direction, **stopping** if there is an obstacle. [...]
 ```
 
-```
+**Do** use simple present, preterit or future.
+
+``` markdown
 Vector2 move ( Vector2 rel_vec )
-Moves the body in the vector's direction. The body stops if it collides with an obstacle. [...]
+Moves the body in the vector's direction. The body **stops** if it collides with an obstacle. [...]
 ```
 
-Some verbs can also turn into adjectival nouns with -ing: `the remaining movement`, `the missing file`, etc. This is different so feel free to use them.
+You may use the progressive tense to describe actions that are continuous in time. Anything like animation or coroutines.
 
+Verbs can turn into adjectival nouns with -ing. This is not a conjugation, so you may use them: `the remaining movement`, `the missing file`, etc.
 
 
 ### Remove unnecessary adverbs and adjectives
 
 Write as few adjectives and adverbs as possible. Only use them if they add key information to the description.
 
+**Don't** use redundant or meaningless adverbs. Words that lengthen the documentation but don't add any information:
+
 ``` markdown
 **Basically** a big texture [...]
 ```
 
-Ban adverbs like "basically", "effectively", and adjectives like "actual". Words that lengthen the documentation but don't add any information.
+**Do** write short sentences in a simple, descriptive language:
 
 ``` markdown
 A big texture [...]
@@ -92,7 +101,7 @@ A big texture [...]
 
 ### Ban these 8 words
 
-Never use these 8 banned words:
+**Don't** ever use these 8 banned words:
 
 1. obvious
 1. simple
@@ -105,16 +114,17 @@ Never use these 8 banned words:
 
 Game creation and programming aren't simple, and nothing's easy to someone learning to use the API for the first time. Other words in the list, like `just` or `actual` won't add any info to the sentence. Don't use corresponding adverbs either: obviously, simply, basically, easily, actually, clearly.
 
-Some examples:
+**Don't** example. The banned words lengthen the description and take attention away from the most important info:
 
 ``` markdown
 **TextureRect**
 Control frame that **simply** draws an assigned texture. It can stretch or not. It's a **simple** way to **just** show an image in a UI.
 ```
 
-The banned words lengthen the description and take attention away from the most important info:
+**Do** remove them:
 
 ``` markdown
+**TextureRect**
 [Control] node that displays a texture. The texture can stretch to the node's bounding box or stay in the center. Useful to display sprites in your UIs.
 ```
 
@@ -122,25 +132,27 @@ The banned words lengthen the description and take attention away from the most 
 
 ``` markdown
 **Timer**
-A simple Timer node.
+A **simple** Timer node.
 ```
 
-Instead, you want to explain what the node does:
+**Do** explain what the node does instead:
 
 ``` markdown
+**Timer**
 Calls a function of your choice after a certain duration.
 ```
 
-On a similar note, "basic" is too vague:
+**Don't** use "basic", it is too vague:
 
 ``` markdown
 **Vector3**
-Vector class, which performs basic 3D vector math operations.
+Vector class, which performs **basic** 3D vector math operations.
 ```
 
-The brief description is a good occasion to offer an overview of the node:
+**Do** use the brief description to offer an overview of the node:
 
 ``` markdown
+**Vector3**
 Provides essential math functions to manipulate 3d vectors: cross product, normalize, rotate, etc.
 ```
 
@@ -148,27 +160,31 @@ Provides essential math functions to manipulate 3d vectors: cross product, norma
 
 Favor explicit references over implicit ones.
 
-Avoid using words like "the former", "the latter", etc. They're not the most common in English, and they require you to check the reference.
+**Don't** use words like "the former", "the latter", etc. They're not the most common in English, and they require you to check the reference.
 
 ``` markdown
 'w' and 'h' define right and bottom margins. The **latter** two resize the texture so it fits in the defined margin.
 ```
 
-Don't be afraid of repetition in documentation or tutorials:
+**Do** repeat words. They remove all ambiguity:
 
 ``` markdown
 'w' and 'h' define right and bottom margins. **'w' and 'h'** resize the texture so it fits the margin.
 ```
 
+If you need to repeat the same variable name 3 or 4 times, you probably need to rephrase your description.
+
 ### Abuse 's to show posession
 
 Avoid "The milk of the cat" feels unnatural in English. Write "The cat's milk" instead.
 
+**Don't** write "of the X":
+
 ``` markdown
-The region **of the AtlasTexture** that is used.
+The region **of the AtlasTexture that is** used.
 ```
 
-`'s` lets you put the main subject at the start of the sentence, and keep it short:
+**Do** use `'s`. It lets you put the main subject at the start of the sentence, and keep it short:
 
 ``` markdown
 The **AtlasTexture's** used region.
@@ -179,45 +195,54 @@ The **AtlasTexture's** used region.
 
 ### Give an overview of the node in the brief description
 
-A class's brief description should explain what is the node's role and its functionality, in up to 200 characters. It's the most important sentence in the entire class reference. It's the user's first contact with a node:
+The brief description is the reference's most important sentence. It's the user's first contact with a node:
 
-1. It's the only sentence that appears in the "Create New Node" dialog.
-1. It's at the top of every node page in the docs
+1. It's the only description in the "Create New Node" dialog.
+1. It's at the top of every page in the reference
 
-Bad:
+The brief description should explain the node's role and its functionality, in up to 200 characters.
+
+**Don't** write tiny and vague summaries:
 
 ``` markdown
-Node2D
+**Node2D**
 Base node for 2D system.
 ```
 
-Better:
+**Do** give an overview of the node's functionality:
 
 ``` markdown
-Barebones 2d game object, parent of all 2D related nodes. Has a position, rotation, scale and z-index.
+**Node2D**
+2d game object, parent of all 2D related nodes. Has a position, rotation, scale and z-index.
 ```
 
-Use the full description to provide more information, and a code example, if possible.
+Use the node's full description to provide more information, and a code example, if possible.
 
 ### Mention what methods return if it's useful
 
 Some methods return important values. Describe them at the end of the description, ideally on a new line. No need to mention the return values for any method whose name starts with `set` or `get`.
+
+**Don't** use the passive voice:
 
 ```
 Vector2 move ( Vector2 rel_vec )
 [...] The returned vector is how much movement was remaining before being stopped.
 ```
 
-Use "Returns". Notice the exception to the "direct voice" rule: in the move method, an external collider can influence and act upon it. In this case, you can use the passive voice:
+**Do** always use "Returns".
 
 ```
 Vector2 move ( Vector2 rel_vec )
 [...] Returns the remaining movement before the body was stopped.
 ```
 
+Notice the exception to the "direct voice" rule: with the move method, an external collider can influence the method and the body that calls `move`. In this case, you can use the passive voice.
+
 ### Use "if true" to describe booleans
 
 For boolean member variables, always use `if true` and/or `if false`, to stay explicit. `Controls whether or not` may be ambiguous and won't work for every member variable:
+
+**Do** start with "if true":
 
 ``` markdown
 Timer.autostart
