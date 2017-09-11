@@ -9,6 +9,8 @@ But it's incomplete. Many methods, variables and signals lack descriptions. Othe
 
 **Important:** we use `a collaborative document <https://hackmd.io/s/H1es51Oeqb>`_ to track who's working on what class. Always notify other writers about what you are working on. You'll find the instructions in the doc.
 
+This guide is available as a `Youtube video <https://www.youtube.com/watch?v=mKKjOulm5XI>`_.
+
 
 How to contribute
 -----------------
