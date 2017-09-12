@@ -1,8 +1,8 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
-[ext_resource path="res://assets/bg.png" type="Texture" id=1]
-[ext_resource path="res://assets/GUI/label_HP_bg.png" type="Texture" id=2]
-[ext_resource path="res://assets/GUI/label_HP.png" type="Texture" id=3]
+[ext_resource path="res://assets/GUI/label_HP_bg.png" type="Texture" id=1]
+[ext_resource path="res://assets/GUI/label_HP.png" type="Texture" id=2]
+[ext_resource path="res://assets/font/Comfortaa-Bold.ttf" type="DynamicFontData" id=3]
 [ext_resource path="res://assets/GUI/label_EP.png" type="Texture" id=4]
 [ext_resource path="res://assets/GUI/lifebar_bg.png" type="Texture" id=5]
 [ext_resource path="res://assets/GUI/lifebar_fill.png" type="Texture" id=6]
@@ -10,6 +10,24 @@
 [ext_resource path="res://assets/GUI/energy_bar_fill.png" type="Texture" id=8]
 [ext_resource path="res://assets/GUI/bombs_icon.png" type="Texture" id=9]
 [ext_resource path="res://assets/GUI/rupees_icon.png" type="Texture" id=10]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 26
+use_mipmaps = false
+use_filter = false
+extra_spacing_top = 6
+font_data = ExtResource( 3 )
+_sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
+
+[sub_resource type="DynamicFont" id=2]
+
+size = 16
+use_mipmaps = false
+use_filter = false
+extra_spacing_top = 4
+font_data = ExtResource( 3 )
+_sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
 
 [node name="GUI" type="MarginContainer"]
 
@@ -25,11 +43,6 @@ custom_constants/margin_top = 20
 custom_constants/margin_left = 20
 custom_constants/margin_bottom = 20
 _sections_unfolded = [ "custom_constants" ]
-
-[node name="bg" type="Sprite" parent="."]
-
-position = Vector2( 684, 382 )
-texture = ExtResource( 1 )
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 
@@ -59,7 +72,6 @@ _sections_unfolded = [ "custom_constants" ]
 
 [node name="HP" type="MarginContainer" parent="HBoxContainer/Labels"]
 
-editor/display_folded = true
 margin_right = 92.0
 margin_bottom = 53.0
 rect_min_size = Vector2( 0, 53 )
@@ -85,7 +97,7 @@ rect_clip_content = false
 mouse_filter = 1
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 2 )
+texture = ExtResource( 1 )
 patch_margin_left = 12
 patch_margin_top = 12
 patch_margin_right = 12
@@ -116,8 +128,41 @@ rect_clip_content = false
 mouse_filter = 1
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
 stretch_mode = 0
+
+[node name="CenterContainer2" type="CenterContainer" parent="HBoxContainer/Labels/HP/Background"]
+
+anchor_left = 1
+anchor_right = 1
+anchor_bottom = 1
+margin_left = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+use_top_left = false
+_sections_unfolded = [ "Margin" ]
+
+[node name="Count" type="Label" parent="HBoxContainer/Labels/HP/Background/CenterContainer2"]
+
+margin_left = 5.0
+margin_top = 4.0
+margin_right = 35.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+text = "80"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/Labels"]
 
@@ -148,7 +193,7 @@ rect_clip_content = false
 mouse_filter = 1
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 2 )
+texture = ExtResource( 1 )
 patch_margin_left = 12
 patch_margin_top = 12
 patch_margin_right = 12
@@ -183,11 +228,43 @@ size_flags_vertical = 1
 texture = ExtResource( 4 )
 stretch_mode = 0
 
+[node name="CenterContainer3" type="CenterContainer" parent="HBoxContainer/Labels/MarginContainer/Background"]
+
+anchor_left = 1
+anchor_right = 1
+anchor_bottom = 1
+margin_left = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+use_top_left = false
+_sections_unfolded = [ "Margin" ]
+
+[node name="Count" type="Label" parent="HBoxContainer/Labels/MarginContainer/Background/CenterContainer3"]
+
+margin_left = 12.0
+margin_top = 4.0
+margin_right = 27.0
+margin_bottom = 27.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 2 )
+text = "12"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
 [node name="Bars" type="VBoxContainer" parent="HBoxContainer"]
 
-editor/display_folded = true
 margin_left = 96.0
-margin_right = 1022.0
+margin_right = 1078.0
 margin_bottom = 93.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -200,7 +277,7 @@ _sections_unfolded = [ "Size Flags", "custom_constants" ]
 
 [node name="LifeBar" type="TextureProgress" parent="HBoxContainer/Bars"]
 
-margin_right = 926.0
+margin_right = 982.0
 margin_bottom = 53.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -224,7 +301,7 @@ _sections_unfolded = [ "Rect", "Textures" ]
 [node name="EnergyBar" type="TextureProgress" parent="HBoxContainer/Bars"]
 
 margin_top = 53.0
-margin_right = 926.0
+margin_right = 982.0
 margin_bottom = 93.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -247,7 +324,8 @@ _sections_unfolded = [ "Rect", "Textures" ]
 
 [node name="CenterContainer" type="CenterContainer" parent="HBoxContainer"]
 
-margin_left = 1026.0
+editor/display_folded = true
+margin_left = 1082.0
 margin_right = 1326.0
 margin_bottom = 93.0
 rect_pivot_offset = Vector2( 0, 0 )
@@ -259,8 +337,10 @@ use_top_left = false
 
 [node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/CenterContainer"]
 
-anchor_right = 1
-anchor_bottom = 1
+editor/display_folded = true
+margin_top = 2.0
+margin_right = 244.0
+margin_bottom = 90.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -270,8 +350,9 @@ alignment = 0
 
 [node name="BombCount" type="MarginContainer" parent="HBoxContainer/CenterContainer/HBoxContainer"]
 
-margin_right = 148.0
-margin_bottom = 93.0
+editor/display_folded = true
+margin_right = 120.0
+margin_bottom = 88.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -285,15 +366,15 @@ _sections_unfolded = [ "custom_constants" ]
 [node name="Background" type="NinePatchRect" parent="HBoxContainer/CenterContainer/HBoxContainer/BombCount"]
 
 margin_top = 20.0
-margin_right = 148.0
-margin_bottom = 73.0
-rect_min_size = Vector2( 140, 0 )
+margin_right = 120.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 120, 48 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 2 )
+texture = ExtResource( 1 )
 patch_margin_left = 12
 patch_margin_top = 12
 patch_margin_right = 12
@@ -329,11 +410,44 @@ size_flags_vertical = 1
 texture = ExtResource( 9 )
 stretch_mode = 0
 
+[node name="CenterContainer4" type="CenterContainer" parent="HBoxContainer/CenterContainer/HBoxContainer/BombCount/Background"]
+
+anchor_right = 1
+anchor_bottom = 1
+margin_right = 60.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+use_top_left = false
+_sections_unfolded = [ "Margin" ]
+
+[node name="Count" type="Label" parent="HBoxContainer/CenterContainer/HBoxContainer/BombCount/Background/CenterContainer4"]
+
+margin_left = 17.0
+margin_top = 6.0
+margin_right = 42.0
+margin_bottom = 42.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+text = "12"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
 [node name="RupeeCount" type="MarginContainer" parent="HBoxContainer/CenterContainer/HBoxContainer"]
 
-margin_left = 152.0
-margin_right = 300.0
-margin_bottom = 93.0
+editor/display_folded = true
+margin_left = 124.0
+margin_right = 244.0
+margin_bottom = 88.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -348,15 +462,15 @@ _sections_unfolded = [ "custom_constants" ]
 [node name="Background" type="NinePatchRect" parent="HBoxContainer/CenterContainer/HBoxContainer/RupeeCount"]
 
 margin_top = 20.0
-margin_right = 148.0
-margin_bottom = 73.0
-rect_min_size = Vector2( 140, 0 )
+margin_right = 120.0
+margin_bottom = 68.0
+rect_min_size = Vector2( 120, 0 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
 size_flags_horizontal = 1
 size_flags_vertical = 1
-texture = ExtResource( 2 )
+texture = ExtResource( 1 )
 patch_margin_left = 12
 patch_margin_top = 12
 patch_margin_right = 12
@@ -393,5 +507,36 @@ size_flags_horizontal = 1
 size_flags_vertical = 1
 texture = ExtResource( 10 )
 stretch_mode = 0
+
+[node name="CenterContainer5" type="CenterContainer" parent="HBoxContainer/CenterContainer/HBoxContainer/RupeeCount/Background"]
+
+anchor_right = 1
+anchor_bottom = 1
+margin_right = 60.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+use_top_left = false
+_sections_unfolded = [ "Margin" ]
+
+[node name="Count" type="Label" parent="HBoxContainer/CenterContainer/HBoxContainer/RupeeCount/Background/CenterContainer5"]
+
+margin_left = 17.0
+margin_top = 6.0
+margin_right = 42.0
+margin_bottom = 42.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+text = "12"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
 
 
