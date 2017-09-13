@@ -1,0 +1,200 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/font/Comfortaa-Bold.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://assets/GUI/bombs_icon.png" type="Texture" id=2]
+[ext_resource path="res://assets/GUI/lifebar_bg.png" type="Texture" id=3]
+[ext_resource path="res://assets/GUI/lifebar_fill.png" type="Texture" id=4]
+[ext_resource path="res://assets/extras/blue.png" type="Texture" id=5]
+[ext_resource path="res://assets/extras/button_yellow.png" type="Texture" id=6]
+[ext_resource path="res://assets/extras/button_green.png" type="Texture" id=7]
+[ext_resource path="res://assets/extras/button_blue.png" type="Texture" id=8]
+
+[sub_resource type="DynamicFont" id=1]
+
+size = 26
+use_mipmaps = false
+use_filter = false
+extra_spacing_top = 6
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
+
+[node name="HBoxContainer" type="Node"]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+
+anchor_right = 1
+anchor_bottom = 1
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/margin_right = 20
+custom_constants/margin_top = 20
+custom_constants/margin_left = 20
+custom_constants/margin_bottom = 20
+_sections_unfolded = [ "custom_constants" ]
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
+
+margin_left = 20.0
+margin_top = 20.0
+margin_right = 1346.0
+margin_bottom = 748.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+use_top_left = false
+_sections_unfolded = [ "Margin", "Visibility" ]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer"]
+
+margin_left = 149.0
+margin_top = 316.0
+margin_right = 1176.0
+margin_bottom = 412.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+custom_constants/separation = 40
+alignment = 0
+_sections_unfolded = [ "Margin", "custom_constants" ]
+
+[node name="Label" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer"]
+
+margin_top = 30.0
+margin_right = 99.0
+margin_bottom = 66.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+text = "Howdy!"
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "custom_fonts" ]
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/CenterContainer/HBoxContainer"]
+
+margin_left = 139.0
+margin_right = 219.0
+margin_bottom = 96.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 2 )
+stretch_mode = 0
+_sections_unfolded = [ "Visibility" ]
+
+[node name="CenterContainer" type="CenterContainer" parent="MarginContainer/CenterContainer/HBoxContainer"]
+
+margin_left = 259.0
+margin_right = 655.0
+margin_bottom = 96.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+use_top_left = false
+
+[node name="TextureProgress" type="TextureProgress" parent="MarginContainer/CenterContainer/HBoxContainer/CenterContainer"]
+
+margin_top = 21.0
+margin_right = 396.0
+margin_bottom = 74.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+min_value = 0.0
+max_value = 25.0
+step = 1.0
+page = 0.0
+value = 16.0
+exp_edit = false
+rounded = true
+texture_under = ExtResource( 3 )
+texture_over = null
+texture_progress = ExtResource( 4 )
+radial_fill_degrees = 360.0
+radial_center_offset = Vector2( 0, 0 )
+_sections_unfolded = [ "Rect", "Textures" ]
+
+[node name="NinePatchRect" type="NinePatchRect" parent="MarginContainer/CenterContainer/HBoxContainer"]
+
+margin_left = 695.0
+margin_right = 891.0
+margin_bottom = 96.0
+rect_min_size = Vector2( 196, 64 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 1
+size_flags_horizontal = 1
+size_flags_vertical = 1
+texture = ExtResource( 5 )
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+_sections_unfolded = [ "Anchor", "Margin", "Patch Margin", "Rect", "Size Flags" ]
+
+[node name="Label2" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer/NinePatchRect"]
+
+anchor_right = 1
+anchor_bottom = 1
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 1 )
+text = "9 patch"
+align = 1
+valign = 1
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Margin", "custom_fonts" ]
+
+[node name="TextureButton" type="TextureButton" parent="MarginContainer/CenterContainer/HBoxContainer"]
+
+margin_left = 931.0
+margin_right = 1027.0
+margin_bottom = 96.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = null
+group = null
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 8 )
+_sections_unfolded = [ "Textures" ]
+
+[node name="Text" type="Control" parent="."]
+
+margin_right = 40.0
+margin_bottom = 40.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+
+
