@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://assets/font/Comfortaa-Bold.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://assets/GUI/bombs_icon.png" type="Texture" id=2]
@@ -17,6 +17,32 @@ use_filter = false
 extra_spacing_top = 6
 font_data = ExtResource( 1 )
 _sections_unfolded = [ "Extra Spacing", "Font", "Settings" ]
+
+[sub_resource type="InputEventKey" id=3]
+
+device = 0
+alt = true
+shift = false
+control = false
+meta = false
+command = false
+pressed = true
+scancode = 6
+unicode = 0
+echo = false
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="ShortCut" id=4]
+
+shortcut = SubResource( 3 )
+_sections_unfolded = [ "Resource" ]
+
+[sub_resource type="BitMap" id=2]
+
+data = {
+"data": PoolByteArray(  ),
+"size": Vector2( 0, 0 )
+}
 
 [node name="HBoxContainer" type="Node"]
 
@@ -37,6 +63,7 @@ _sections_unfolded = [ "custom_constants" ]
 
 [node name="CenterContainer" type="CenterContainer" parent="MarginContainer"]
 
+editor/display_folded = true
 margin_left = 20.0
 margin_top = 20.0
 margin_right = 1346.0
@@ -51,10 +78,10 @@ _sections_unfolded = [ "Margin", "Visibility" ]
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/CenterContainer"]
 
-margin_left = 149.0
-margin_top = 316.0
-margin_right = 1176.0
-margin_bottom = 412.0
+margin_left = 187.0
+margin_top = 324.0
+margin_right = 1138.0
+margin_bottom = 404.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -66,9 +93,9 @@ _sections_unfolded = [ "Margin", "custom_constants" ]
 
 [node name="Label" type="Label" parent="MarginContainer/CenterContainer/HBoxContainer"]
 
-margin_top = 30.0
+margin_top = 22.0
 margin_right = 99.0
-margin_bottom = 66.0
+margin_bottom = 58.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 2
@@ -86,7 +113,7 @@ _sections_unfolded = [ "custom_fonts" ]
 
 margin_left = 139.0
 margin_right = 219.0
-margin_bottom = 96.0
+margin_bottom = 80.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -100,7 +127,7 @@ _sections_unfolded = [ "Visibility" ]
 
 margin_left = 259.0
 margin_right = 655.0
-margin_bottom = 96.0
+margin_bottom = 80.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 0
@@ -110,9 +137,9 @@ use_top_left = false
 
 [node name="TextureProgress" type="TextureProgress" parent="MarginContainer/CenterContainer/HBoxContainer/CenterContainer"]
 
-margin_top = 21.0
+margin_top = 13.0
 margin_right = 396.0
-margin_bottom = 74.0
+margin_bottom = 66.0
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
 mouse_filter = 1
@@ -136,7 +163,7 @@ _sections_unfolded = [ "Rect", "Textures" ]
 
 margin_left = 695.0
 margin_right = 891.0
-margin_bottom = 96.0
+margin_bottom = 80.0
 rect_min_size = Vector2( 196, 64 )
 rect_pivot_offset = Vector2( 0, 0 )
 rect_clip_content = false
@@ -168,25 +195,6 @@ lines_skipped = 0
 max_lines_visible = -1
 _sections_unfolded = [ "Margin", "custom_fonts" ]
 
-[node name="TextureButton" type="TextureButton" parent="MarginContainer/CenterContainer/HBoxContainer"]
-
-margin_left = 931.0
-margin_right = 1027.0
-margin_bottom = 96.0
-rect_pivot_offset = Vector2( 0, 0 )
-rect_clip_content = false
-mouse_filter = 0
-size_flags_horizontal = 1
-size_flags_vertical = 1
-toggle_mode = false
-enabled_focus_mode = 2
-shortcut = null
-group = null
-texture_normal = ExtResource( 6 )
-texture_pressed = ExtResource( 7 )
-texture_hover = ExtResource( 8 )
-_sections_unfolded = [ "Textures" ]
-
 [node name="Text" type="Control" parent="."]
 
 margin_right = 40.0
@@ -196,5 +204,29 @@ rect_clip_content = false
 mouse_filter = 0
 size_flags_horizontal = 1
 size_flags_vertical = 1
+
+[node name="TextureButton" type="TextureButton" parent="Text"]
+
+margin_left = 989.0
+margin_top = 139.0
+margin_right = 1167.0
+margin_bottom = 258.0
+rect_min_size = Vector2( 20, 20 )
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 0
+size_flags_horizontal = 1
+size_flags_vertical = 1
+toggle_mode = false
+enabled_focus_mode = 2
+shortcut = SubResource( 4 )
+group = null
+texture_normal = ExtResource( 6 )
+texture_pressed = ExtResource( 7 )
+texture_hover = ExtResource( 8 )
+texture_click_mask = SubResource( 2 )
+expand = true
+stretch_mode = 1
+_sections_unfolded = [ "Rect", "Textures" ]
 
 
