@@ -61,26 +61,70 @@ To add the nodes as siblings, always select the `Count` node first.
 
 Our scene is still empty. It's time to throw in some textures. To load the textures, head to the FileSystem dock to the left of the viewport. Browse down to the res://assets/GUI folder.
 
-![You should see a list of sprites that we'll use to skin our interface.](./img/textures_in_FileSystem_tab.png)
+![You should see a list of sprites that we'll use to skin our interface.](./img/ui_gui_step_tutorial_textures_in_FileSystem_tab.png)
 
 Select the `Background` in the Scene dock. In the Inspector, you should see a `Texture` property. In the FileSystem tab, click and drag `label_HP_bg.png` onto the `Texture` slot. It stays squashed. The parent MarginContainer will force its size down to 0 until we force elements inside the container to have a minimum size. Select the `Background` node. In the Inspector, scroll down to the Rect section. Set `Min Size` to (100, 40). You should see the `Background` resize along with its parent containers.
 
-Next, select the `Title` and drag and drop `label_HP.png` into its `Texture` slot.
+Next, select the `Title` and drag and drop `label_HP.png` into its `Texture` slot. Select the `Number` node, click the field next to the `Text` property and type `10`. This way, we can see both nodes in the viewport. They should stack up in the top-left corner of their parent `MarginContainer`.
 
-<!-- TODO: Setup HP and label on left and right sides -->
+![If you select both nodes, you should see something like this](./img/ui_gui_step_tutorial_bar_label_stacked.png)
 
-### Set up the Number Label
+As they have a container as their direct parent, we cannot move them freely: the `Count` node will always reset their anchors, their size and position. Try to move and resize the nodes in the viewport. Then, select any of the 3 textures and press Ctrl Up or Ctrl Down to reorder them in the Scene dock. They'll snap back to their previous size and position.
 
-Do the same for the `Number` node: 
+Parent containers control the size, the scale, the margins, and the anchors of their direct children. To modify the nodes, you must nest them inside a regular Control or another UI element. We'll use the `Background` as a parent for the `Title` and `Number`. Select both the `Title` and `Number`, and drag and drop them onto `Background`.
+
+![By using the Background node as the 2 textures' parent, we take control away from the Count MarginContainer](./img/ui_gui_step_tutorial_bar_nesting_inside_background.png)
+
+Select the `Title` and in the Inspector, change its `Stretch Mode` property to `Keep Centered`. Resize it in the viewport with the `Select Mode` tool so it only takes the left half of the background. Next, select the `Number` node. In the viewport, click the `Anchor` menu and click `Full Rect and Fit Parent`. The node will resize to fit the `Background`. Head to the Inspector and change its `Align` property to `Right`, and the `VAlign` property to `Center`. The text should snap to the center of the `Background`'s right edge. Resize the node horizontally so it takes the right half of the `Background` and there's a bit of padding with the right edge.
+
+![Here's how the nodes' bounding boxes should look in the viewport. Keep it rough, you don't need to place them too precisely for now.](./img/ui_gui_step_tutorial_bar_placed_title_and_label.png)
+
+
+### Replace the Label's font
+
+The label's font is too small. We need to replace it. Select the `Number` node and in the Inspector, scroll down to the `Control` class, and find the `Custom Font` category. Click the field next to the `Font` property and click on `New Dynamic Font`. Click on the field again and select Edit. 
+
+You will enter the `Dynamic Font` resource. Unfold the `Font` category and click the field next to `Font Data`. Click the `Load` button. In the file browser, navigate down to the assets/font folder and double click `Comfortaa-Bold.ttf` to open it. You should see the font update in the viewport. Unfold the settings category to change the font size. Set the `Size` property to a higher value, like 24 or 28. 
+
+We now need the text's baseline, the number's lower edge, to align with the HP texture on the left. To do so, still in the `DynamicFont` resource, you can tweak the `Bottom` property under the `Extra Spacing` category. It adds some bottom padding to the text. Click the `Number` node in the Scene tab to go back to the node's properties and change the `VAlign` to `Bottom`. To adjust the text's baseline, click on the font field under the `Custom Font` category again and tweak the `Bottom` property until the text aligns with the `Title` node. I used a value of 2 pixels.
+
+
+![With a Bottom value of 2 pixels, the Number aligns with the Title](./img/ui_gui_step_tutorial_number_baseline.png)
+
+With this, we just finished the hardest part of the GUI. Congratulations! Let's move on to the simpler nodes.
 
 ### Add the progress bar
 
-Select the bar node and add a texture progress inside of it. Name the texture progress node gauge. In the inspector, under the texture progress class, in the expand
-under the texture progress class, in the inspector
-in the inspector, under the texture progress class, and for the textures section. Click the dots next to the under texture
-With the gauge selected click and drag the lightbar BG sprite onto the under slot in the textures section. As you are dragging the texture, you should see and arrange outline around the Texas lot do the same with the lightbar_bill.PNG image and drop it onto the progress slot.
+We need one last element to complete our life bar: the gauge itself. Godot ships with a `TextureProgress` node that has everything we need.
 
-## Create reusable UI components
+Select the Bar node and add a `TextureProgress` inside of it. Name it Gauge. In the inspector unfold the `Textures` section. Head to the FileSystem dock and drag and drop the `lifebar_bg.png` sprite onto the `Under` slot. Do the same with the `lifebar_fill.png` image and drop it onto the `Progress` slot. Under the `Range` class in the inspector, change the `Value` property to 50 to see the gauge fill up.
+
+With only 5 `Control` nodes, our first bar is ready to use.
+
+![That's it, our life bar is ready. This last part was quick, wasn't it? That's thanks to our robust container setup.](./img/ui_gui_step_tutorial_bar_final.png)
+
+
+## Design the bomb and rupee counters
+
+The bomb and rupee counters are like the bar's `Count` node. So we'll duplicate it and use it as a template.
+
+Under the `Bar` node, select `Count` and press Ctrl D to duplicate it. Drag and drop the new node under the `Counters` HBoxContainer at the bottom of the scene tree. You should see it resize automatically. Don't worry about this for now, we'll fix the size soon.
+
+Rename the `Count2` node to `Counter`. Unlike the bars, we want the number to be on the left, and an icon to sit on the right. The setup is the same: we need background, a `NinePatchFrame`, the title, and the number nodes. The `Title` node is a `TextureRect`, so it's what we need to display the icon. In the scene tree, select the `Title` node, and rename it to `Icon`.
+
+![Here's how your node tree should look so far](./img/ui_gui_step_tutorial_counter_design_1.png)
+
+With the `Icon` node selected, in the inspector, scroll to the top to see the `Texture` slot. Head to the FileSystem dock on the left and select the `bombs_icon.png`. Drag and drop it onto the `Texture` slot. In the Scene Tab select both the `Icon` and the `Number` nodes. Click the anchor menu in the toolbar at the top of the viewport and select `Full Rect and Fit Parent`. Both nodes will update to fit the size of the `Background`.
+
+![The nodes anchor to the entire Background, but their position is off](./img/ui_gui_step_tutorial_counter_design_2.png)
+
+Let's change the `Number`'s align properties to move it to the left and center of the `Background`. Select the `Number` node, change its `Align` property to left and the `VAlign` property to centre. Then resize its left edge a little bit to add some padding between the left edge of the `Background` and the text.
+
+![The Number node aligned to the left and centre](./img/ui_gui_step_tutorial_counter_design_3.png)
+
+![](./img/ui_gui_step_tutorial_.png)
+
+## Turn the bar and counters into reusable UI components
 
 ### Bar
 
@@ -89,7 +133,7 @@ We need a common bar that will modified to create the life bar on the one hand, 
 ### Widget
 ### Turn branches into individual scenes
 
-## Inherited Scenes
+## Use Scene Inheritance to create the remaining elements
 
 We need 2 bars that work the same way: they should feature a label on the left, with some value, and a horizontal gauge on the right. The only difference is that one has the HP label and is green, while the other is called EP and it's yellow. Godot gives us a powerful tool to create a common base to reuse for all bars in the game: **inherited scenes**.
 
@@ -111,13 +155,14 @@ First, rename the root or top level node to `LifeBar`. We always want the root t
 
 .. note:: If you've ever done web design, it's the same spirit as working with CSS: you create a base class, and add variations with modifier classes. From a base button class, you'll have button-green and button-red variations for the user to accept and refuse prompts. The new class contains the name of the parent element and an extra keyword to explain how it modifies it. When we create an inherited scene and change the name of the top level node, we're doing the same thing
 
-## Create final components
+### Design the life and energy bars
 
-### Life and energy bars
-### Bombs and rupee counters
+### Add the bomb and rupee counters
+
+## Add the UI components to the final GUI
 
 
-## Build the final GUI with our inherited scenes
-## Final note on responsive design
+Place the GUI scene on top of the mockup
 
-We don’t need the interface to be as flexible as a website. In the majority of games, you don’t want to support both landscape and portrait screen orientations. It’s one of the other. That’s why it’s enough for the GUI elements to only move horizontally when we change the window size. In landscape position, the most common ratios range from 4:3 16:10.
+
+.. note:: About **responsive design** We don’t need the interface to be as flexible as a website. In the majority of games, you don’t want to support both landscape and portrait screen orientations. It’s one of the other. That’s why it’s enough for the GUI elements to only move horizontally when we change the window size. In landscape position, the most common ratios range from 4:3 16:10.
