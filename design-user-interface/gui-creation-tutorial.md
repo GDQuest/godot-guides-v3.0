@@ -49,7 +49,7 @@ We want to stack the bars vertically inside the `HBoxContainer`. To do this, let
 
 Each bar is split into two sub-elements that align horizontally: the label with the health count on the left, and the gauge on the right. Once again, the `HBoxContainer` is the perfect tool for the job. Select the `Bars` node and add a new `HBoxContainer` inside of it. Name it `Bar`.
 
-The label itself is requires at least three nodes: a `NinePatchRect` for the background, on top of which we'll add a sprite on the left, either `HP` or `EP`, and a `Label` on the right for the value. We can nest `Control` nodes however we want. We could use the `NinePatchRect` as a parent for the two other elements, as it encompasses them. In general, you want to use containers instead, as their role is to help organize UI components. We'll need a `MarginContainer` later anyway to add some space between the life count and the gauge. Select the `Bar` and add a `MarginContainer`. Name it `Count`. Inside of it, add three nodes:
+The label itself is requires at least three nodes: a `NinePatchRect` for the background, on top of which we'll add a texture on the left, either `HP` or `EP`, and a `Label` on the right for the value. We can nest `Control` nodes however we want. We could use the `NinePatchRect` as a parent for the two other elements, as it encompasses them. In general, you want to use containers instead, as their role is to help organize UI components. We'll need a `MarginContainer` later anyway to add some space between the life count and the gauge. Select the `Bar` and add a `MarginContainer`. Name it `Count`. Inside of it, add three nodes:
 
 1. A `NinePatchRect` named `Background`
 1. A `TextureRect` named `Title`
@@ -61,7 +61,7 @@ To add the nodes as siblings, always select the `Count` node first.
 
 Our scene is still empty. It's time to throw in some textures. To load the textures, head to the FileSystem dock to the left of the viewport. Browse down to the res://assets/GUI folder.
 
-![You should see a list of sprites that we'll use to skin our interface.](./img/ui_gui_step_tutorial_textures_in_FileSystem_tab.png)
+![You should see a list of textures that we'll use to skin our interface.](./img/ui_gui_step_tutorial_textures_in_FileSystem_tab.png)
 
 Select the `Background` in the Scene dock. In the Inspector, you should see a `Texture` property. In the FileSystem tab, click and drag `label_HP_bg.png` onto the `Texture` slot. It stays squashed. The parent MarginContainer will force its size down to 0 until we force elements inside the container to have a minimum size. Select the `Background` node. In the Inspector, scroll down to the Rect section. Set `Min Size` to (100, 40). You should see the `Background` resize along with its parent containers.
 
@@ -97,7 +97,7 @@ With this, we just finished the hardest part of the GUI. Congratulations! Let's 
 
 We need one last element to complete our life bar: the gauge itself. Godot ships with a `TextureProgress` node that has everything we need.
 
-Select the Bar node and add a `TextureProgress` inside of it. Name it `Gauge`. In the inspector unfold the `Textures` section. Head to the FileSystem dock and drag and drop the `lifebar_bg.png` sprite onto the `Under` slot. Do the same with the `lifebar_fill.png` image and drop it onto the `Progress` slot. Under the `Range` class in the inspector, change the `Value` property to `50` to see the gauge fill up.
+Select the Bar node and add a `TextureProgress` inside of it. Name it `Gauge`. In the inspector unfold the `Textures` section. Head to the FileSystem dock and drag and drop the `lifebar_bg.png` texture onto the `Under` slot. Do the same with the `lifebar_fill.png` image and drop it onto the `Progress` slot. Under the `Range` class in the inspector, change the `Value` property to `50` to see the gauge fill up.
 
 With only five `Control` nodes, our first bar is ready to use.
 
@@ -122,16 +122,29 @@ Let's change the `Number`'s align properties to move it to the left and center o
 
 ![The Number node aligned to the left and centre](./img/ui_gui_step_tutorial_counter_design_3.png)
 
-![](./img/ui_gui_step_tutorial_.png)
+To overlap the Icon and the background, we need a few tweaks. First, our background is a bit too tall. It's because it's inside a margin container that is controlled by the top-most GUI node. Select the GUI node at the top of the scene tree and downsize it vertically so that it's as thin as possible. You'll see the gauge prevents you from making it too small. A container cannot be smaller than the minimal size of its children. The container's margins also weigh in.
 
-## Turn the bar and counters into reusable UI components
+Select the Icon, click the Anchor menu, and select `Full Rect and Fit Parent` to re-center it. We need it to anchor to the `Background`'s right edge. Open the Anchor menu again and select `Right Wide`. Move the icon up so it is centered vertically with the `Background`.
 
-### Bar
+![The bomb icon anchors to the Background's right edge. Resize the Counter container to see the Icon node stick to its right side](./img/ui_gui_step_tutorial_counter_design_4.png)
 
-We need a common bar that will modified to create the life bar on the one hand, and the energy bar on the other hand.
+Because we duplicated the `Counter` from the bar's `Count`, the `Number` node's font is off. Select the `Number` node again, head to the `Font` property, and click it  to access the `DynamicFont` resource. In the `Extra Spacing` section, change the `Bottom` value to `0` to reset the font's baseline. Our counter now works as expected.
 
-### Widget
-### Turn branches into individual scenes
+While we are at it, let's make it so the `Counters` snap to the right edge of the viewport. To achieve this we will set the `Bars` container to expand and take all the horizontal space. Select the `Bars` node and scroll down to the `Size Flags` category. In the `Horizontal` category, check the `Expand` value. The `Bars` node should resize and push the counter to the rightmost of the screen.
+
+![An expanding container eats all the space it can from its parent, pushing everything else along the way](./img/ui_gui_step_tutorial_counter_design_5.png)
+
+## Turn the bar and counter into reusable UI components
+
+We have one bar and one counter widget. But we need two of each. We may need to change the bars' design or their functionality later on. It'd be great if we could have a single scene to store a UI element's template, and child scenes to work on variations. Godot lets us do this with Inherited Scenes. 
+
+Let's save both the `Counter` and the `Bar` branches as separate scenes that we'll reduce to create the `LifeBar`, the `EnergyBar`, the `BombCounter`, and the `RupeeCounter`. Select the `Bar` HBoxContainer. Right click on it and click on `Save Branch as Scene`. Save the scene as `Bar.tscn`. You should see the node branch turn it to a single `Bar` node. 
+
+.. tip:: A scene is a tree of nodes. The topmost node is the tree's **root**, and the children at the bottom of the hierarchy are **leaves**. Any node other than the root along with one more children is a **branch**. We can encapsulate node branches into separate scenes, or load and merge them from other scenes into the active one. Right click on any node in the Scene dock and select `Save Branch as Scene` or `Merge from Scene`.
+
+Then, select the `Counter` node and do the same. Right click,  `Save Branch as Scene`, and save it as `Counter.tscn`. A new edit scene icon appears to the right of the nodes in the scene tree. Click on the one next to `Bar` to open the corresponding scene. Resize the `Bar` node so that its bounding box fits its content. The way we named and place the Control nodes, we're ready to inherit this template and create the life bar. It's the same for the `Counter`.
+
+![With no extra changes, our Bar is ready to use](./img/ui_gui_step_tutorial_bar_template_scene.png)
 
 ## Use Scene Inheritance to create the remaining elements
 
@@ -147,22 +160,89 @@ A reload icon will appear next to the properties you override. Click it to reset
 
 ### Inherit the Bar Scene to build the LifeBar
 
-Go to Scene -> New Inherited Scene to create a new type of Bar. Select the Bar scene and open it. You should see a new [unsaved] tab, that's like your Bar, but with all nodes except the root in red. Press Ctrl S to save the new inherited scene and name it `LifeBar`.
+Go to `Scene -> New Inherited Scene` to create a new type of `Bar`. Select the Bar scene and open it. You should see a new [unsaved] tab, that's like your `Bar`, but with all nodes except the root in grey. Press :kbd:`Ctrl S` to save the new inherited scene and name it `LifeBar`.
 
-![You can't rename red nodes. This tells you they have a parent scene](img/ui_gui_step_tutorial_inherited_scene_parent.png)
+![You can't rename grey nodes. This tells you they have a parent scene](img/ui_gui_step_tutorial_inherited_scene_parent.png)
 
-First, rename the root or top level node to `LifeBar`. We always want the root to describe exactly what this UI component is. The name differentiates this bar from the EnergyBar we'll create next. The other nodes inside the scene should describe the component's structure with broad terms, so it works with all inherited scenes. Like our Gauge and Label nodes.
+First, rename the root or top level node to `LifeBar`. We always want the root to describe exactly what this UI component is. The name differentiates this bar from the `EnergyBar` we'll create next. The other nodes inside the scene should describe the component's structure with broad terms, so it works with all inherited scenes. Like our `TextureProgress` and `Number` nodes.
 
 .. note:: If you've ever done web design, it's the same spirit as working with CSS: you create a base class, and add variations with modifier classes. From a base button class, you'll have button-green and button-red variations for the user to accept and refuse prompts. The new class contains the name of the parent element and an extra keyword to explain how it modifies it. When we create an inherited scene and change the name of the top level node, we're doing the same thing
 
-### Design the life and energy bars
+### Design the EnergyBar
 
-### Add the bomb and rupee counters
+
+We already setup the `LifeBar`'s design with the main `Bar` scene. Now we need the `EnergyBar`. 
+
+Let's create a new inherited scene, and once again select the `Bar.tscn` scene and open it. Save the new scene as `EnergyBar.tscn`. Double-click on the `Bar` root node and rename it to `EnergyBar`. We need to replace the HP texture with EP one, and to change the textures on the gauge. 
+
+Head to the FileSystem dock on the left, select the `Title` node in the Scene tree and drag and drop the `label_EP.PNG` file onto the texture slot. Select the `Number` node and change the `Text` property to a different value like `14`.
+
+You'll notice the EP texture is smaller than the HP one. We should update the `Number`'s font size to better fit it. A font is a resource. All the nodes in the entire project that use this resource will be affected by any property we change. You can try to change the size to a huge value like `40` and switch back to the `LifeBar` or the `Bar` scenes. You will see the text increased in size.
+
+![If we change the font resource, all the nodes that use it are affected](./img/ui_gui_step_tutorial_design_EnergyBar_1.png)
+
+To change the font size on this node only, we must create a copy of the font resource. Select the `Number` node again and click on the wrench and screwdriver icon on the top right of the inspector. In the drop-down menu, select the `Make Sub-Resources Unique` option. Godot will find all the resources this node uses and create unique copies for us.
+
+![Use this option to create unique copies of the resources for one node](./img/ui_gui_step_tutorial_design_EnergyBar_2.png)
+
+.. tip:: When you duplicate a node from the Scene tree, with :kbd:`Ctrl D`, it shares its resources with the original node. You need to use `Make Sub-Resources Unique` before you can tweak the resources without affecting the source node.
+
+Scroll down to the `Custom Font` section and open `Font`. Lower the `Size` to a smaller value like `20` or `22`. You may also need to adjust the `Bottom` spacing value to align the text's baseline with the EP label on the left.
+
+![The EP Count widget, with a smaller font than its HP counterpart](./img/ui_gui_step_tutorial_design_EnergyBar_3.png)
+
+Now, select the `TextureProgress` node. Drag the `energy_bar_bg.png` file onto the `Under` slot and do the same for `energy_bar_fill.png` and drop it onto the `Progress` texture slot.
+
+you can resize the node vertically so that its bounding rectangle fits the gauge. Do the same with the `Count` node until its size aligns with that of the bar. Because the minimal size of `TextureProgress` is set based on its textures, you won't be able to downsize the `Count` node below that. That is also the size the `Bar` container will have. You may downscale this one as well.
+
+last but not least, the `Count` container has a minimum size that makes it a bit large. Select it and in the `Rect` section, change the `Min Size` property down to `80` pixels. It should resize automatically and the `Title` and `Number` nodes should reposition as well.
+
+![The Count looks better now it's a bit smaller](./img/ui_gui_step_tutorial_design_EnergyBar_4.png)
+
+.. tip:: The Count node's size affects the position of the TextureProgress. As we'll align our bars vertically in a moment, we're better off using the Counter's left margin to resize our EP label. This way both the EnergyBar's Count and the LifeBar's Count nodes are one hundred pixels wide, so both gauges will align perfectly.
+
+### Prepare the bomb and rupee counters
+
+Let us now take care of the counters. Go to `Scene -> New Inherited Scene` and select the `Counter.tscn` as a base. Save the new scene as `BombCounter.tscn`. Rename the root node as `BombCounter` too. That's all for this scene. 
+
+![The bomb counter is the same as the original Counter scene](./img/ui_gui_step_tutorial_design_counters_1.png)
+
+Go to `Scene -> New Inherited Scene` again and select `Counter.tscn` once more. Save the scene as `RupeeCounter.tscn`. Rename the root node `RupeeCounter`. For this one, we mainly need to replace the bomb icon with the rupee icon. In the FileSystem tab, drag the `rupees_icon.PNG` onto the `Icon` node's `Texture` slot. `Icon` already anchors to the right edge of the `Background` node so we can change its position and it will scale and reposition with the `RupeeCounter` container. Shift the rupee icon a little bit to the right and down. Use the Arrow Keys on the keyboard to nudge its position. Save, and we're done with all the UI elements.
+
+![The rupee counter should look about like this](./img/ui_gui_step_tutorial_design_counters_2.png)
 
 ## Add the UI components to the final GUI
 
+Time to add all the UI elements to the main GUI scene. Open the `GUI.tscn` scene again, and delete the `Bar` and `Counter` nodes. In the FileSystem dock, find the `LifeBar.tscn` and drag and drop it onto the `Bars` container in the scene tree. Do the same for the `EnergyBar`. You should see them align vertically. 
 
-Place the GUI scene on top of the mockup
+![The LifeBar and the EnergyBar align automatically](./img/ui_gui_step_tutorial_assemble_final_gui_1.png)
 
+Now, drag and drop the BombCounter and RupeeCounter scenes onto the Counters node. They'll resize size automatically.
 
-.. note:: About **responsive design** We don’t need the interface to be as flexible as a website. In the majority of games, you don’t want to support both landscape and portrait screen orientations. It’s one of the other. That’s why it’s enough for the GUI elements to only move horizontally when we change the window size. In landscape position, the most common ratios range from 4:3 to 16:10.
+![The nodes resize to take all the available vertical space](./img/ui_gui_step_tutorial_assemble_final_gui_2.png)
+
+To let the `RupeeCounter` and `BombCounter` use the size we defined in `Counter.tscn`, we need to change the `Size Flags` on the `Counters` container. Select the `Counters` node and unfold the `Size Flags` section in the Inspector. Uncheck the `Fill` tag for the `Vertical` property, and check `Shrink Center` so the container centers inside the `HBoxContainer`.
+
+![Now both counters have a decent size](./img/ui_gui_step_tutorial_assemble_final_gui_3.png)
+
+.. tip:: Change the `Min Size` property of the `Counters` container to control the height of the counters' background.
+
+We have one small issue left with the EP label on the EnergyBar: the 2 bars should align vertically. Click the icon next to the `EnergyBar` node to open its scene. Select the `Count` node and scroll down to the `Custom Constant` section. As a add a `Margin Left` of `20`. In the `Rect` section set the node's `Min Size` back to 100, the same value as on the LifeBar. The `Count` should now have some margin on the left. If you save and go back to the GUI scene, it will be aligned vertically with the Life` `Bar.
+
+![The 2 bars align perfectly](./img/ui_gui_step_tutorial_assemble_final_gui_4.png)
+
+.. note:: We could have setup the `EnergyBar` this way a few moments ago. But this shows you that you can go back to any scene anytime, tweak it, and see the changes propagate through the project!
+
+## Place the GUI onto the game's mockup
+
+To wrap up the tutorial we're going to insert the GUI onto the game's mockup scene.
+
+Head to the FileSystem dock and open `LevelMockup.tscn`.
+
+Drag-and-drop the `GUI.tscn` scene right below the `bg` node and above the `Characters`. The GUI will scale to fit the entire viewport. Head to the anchor menu and select the `Top Wide` option so it anchors to the top edge of the game window. Then resize the GUI to make it as small as possible vertically. Now you can see how the interface looks in the context of the game.
+
+Congratulations for getting to the end of this long tutorial. You can find final project [here](#).
+
+![The final result](./img/ui_gui_design_final_result.png)
+
+.. note:: **A final note about Responsive Design**. If you resize the GUI, you'll see the nodes move, but the textures and text won't scale. The GUI also has a minimum size, based on the textures inside of it. In games, we don’t need the interface to be as flexible as that of a website. You almost never want to support both landscape and portrait screen orientations. It’s one of the other. In landscape orientation, the most common ratios range from 4:3 to 16:10. They are close to one another. That’s why it’s enough for the GUI elements to only move horizontally when we change the window size.
