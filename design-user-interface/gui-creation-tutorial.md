@@ -1,6 +1,6 @@
 # Design the GUI
 
-Now you nailed the basics, we're going to see how to build a Game User Interface (GUI) with reusable UI components: a life bar, an energy bar, a bomb and a rupee counter. By the end of this tutorial, you'll have a game GUI, ready to control with GDscript:
+Now that you've nailed the basics, we're going to see how to build a Game User Interface (GUI) with reusable UI components: a life bar, an energy bar, and bomb and rupee counters. By the end of this tutorial, you'll have a game GUI, ready to control with GDscript or VisualScript:
 
 ![The final result](./img/ui_gui_design_final_result.png)
 
@@ -12,7 +12,7 @@ You'll also learn to:
 
 ## Breaking down the UI
 
-Let's break down the final UI and plan the containers we'll use. As in the [main menu tutorial](#), it starts with a MarginContainer. Then, we can either see up to three columns:
+Let's break down the final UI and plan the containers we'll use. As in the [main menu tutorial](#), it starts with a MarginContainer. Then, we can see up to three columns:
 
 1. The life and energy counters on the left
 2. The life and energy bars
@@ -23,23 +23,25 @@ But the bar's label and the gauge are 2 parts of the same UI element. If we thin
 1. The life and energy bars on the left
 1. The bomb and rupee counters on the right
 
-This makes it easier to nest containers: we have some margins around the border of the screen, a MarginContainer, followed by an HBoxContainer to manage our two columns. The two bars stack on top of one another, inside a VBoxContainer. And we'll need a last HBoxContainer in the right column to place the bomb and rupee counters side-by-side.
+This makes it easier to nest containers: we have some margins around the border of the screen using a MarginContainer, followed by an HBoxContainer to manage our two columns. The two bars stack on top of one another inside a VBoxContainer. And we'll need a last HBoxContainer in the right column to place the bomb and rupee counters side-by-side.
 
 ![We get a clean UI layout with only 4 containers](./img/ui_gui_step_tutorial_containers_structure.png)
 
-We will need extra containers inside the individual UI components, but this gives us the main GUI scene's structure. With this out of the way, we can jump into Godot and create our GUI.
+We will need extra containers inside the individual UI components, but this gives us the main GUI scene's structure. With this plan in place, we can jump into Godot and create our GUI.
 
 ## Create the base GUI
 
-There 2 possible approaches to the GUI: we can design elements in separate scenes and put them together, or prototype everything in a single scene and break it down later. I recommend to work with a single scene as you can play with your UI's placement and proportions faster this way. Once it looks good, it's easy to save entire sections of the node tree as reusable sub-scenes. We'll do just that in a moment.
+There 2 possible approaches to the GUI: we can design elements in separate scenes and put them together, or prototype everything in a single scene and break it down later. I recommend working with a single scene as you can play with your UI's placement and proportions faster this way. Once it looks good, you can save entire sections of the node tree as reusable sub-scenes. We'll do just that in a moment.
+
+> CB: _avoid "it's easy"_ ;)
 
 For now, let's start with a few containers.
 
-Create a new scene and add a MarginContainer. Select the node and name it GUI. Then, save the scene and name it GUI.tscn. It will contain the entire GUI.
+Create a new scene and add a MarginContainer. Select the node and name it GUI. Then save the scene and name it GUI.tscn. It will contain the entire GUI.
 
 With the MarginContainer selected, head to the inspector and scroll down to the custom constants section. Unfold it and click the field next to each of the Margin properties. Set them all to 20 pixels. Next, add an HBoxContainer node. This one will contain our two bars on the left and separate them from the two counters on the right. 
 
-We want to stack the bars vertically inside the HBoxContainer. To to this, let's add a VBoxContainer. Name it "Bars". Select the parent HBoxContainer again and this time, add another HBoxContainer. This one will hold the counters, so call it "Counters". With these four containers along, we have the base for our GUI scene.
+We want to stack the bars vertically inside the HBoxContainer. To to this, let's add a VBoxContainer. Name it "Bars". Select the parent HBoxContainer again and this time, add another HBoxContainer. This one will hold the counters, so call it "Counters". With these four containers, we have the base for our GUI scene.
 
 ![You should have 4 containers that look like this](./img/ui_gui_containers_structure_in_godot.png)
 
