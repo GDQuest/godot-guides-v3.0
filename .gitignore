@@ -2,5 +2,7 @@ psd
 src
 *.html
 *.import
+
 .import
+logs
 .afdesign
