@@ -4,7 +4,7 @@
 
 In this tutorial you will connect a character to a life bar and animate the health loss.
 
-![Here's what you'll create: the bar and the counter animate when the character takes a hit. They fade when it dies.](final_result.gif)
+![Here's what you'll create: the bar and the counter animate when the character takes a hit. They fade when it dies.](img/final_result.gif)
 
 You will learn:
 
@@ -67,7 +67,7 @@ onready var Tween = $Tween
     The project uses a simple organisation that works for game jams and tiny games.
     At the root of the project, in the `res://` folder, you will find the `LevelMockup`. That's the main game scene and the one we will work with. All the components that make up the game are in the `scenes/` folder. The `assets/` folder contains the game sprites and the font for the HP counter. In the `scripts/` folder you will find the enemy, the player, and the GUI controller scripts.
     Click the edit scene icon to the right of the node in the scene tree to open the scene in the editor. You'll see the LifeBar and EnergyBar are sub-scenes themselves. You can also right click on the `GUI` node and activate the `Editable Children` checkbox at the bottom of the drop-down menu.
-    ![The Player scene with Editable Children checked](Player_with_editable_children_on.png)
+    ![The Player scene with Editable Children checked](img/Player_with_editable_children_on.png)
 
 
 ## Set up the LifeBar with the Player's max\_health
@@ -79,7 +79,7 @@ We could stop here to display the number, but we need to initialize the bar's `m
 .. tip::
 
     The bar, a `TextureProgress`, has a `max_value` of `100` by default. If you don't need to display the character's health with a number, you don't need to change its `max_value` property. You send a percentage from the `Player` to the `GUI` instead:  `health / max_health * 100`.
-    ![TextureProgress's Range section shows a max_value of 100 by default](TextureProgress_default_max_value.png)
+    ![TextureProgress's Range section shows a max_value of 100 by default](img/TextureProgress_default_max_value.png)
 
 
 Click the script icon to the right of the `GUI` in the Scene dock to open its script. In the `_ready` function, we're going to store the `Player`'s `max_health` in a new variable and use it to set the `Bar`'s `max_value`:
@@ -131,11 +131,11 @@ The first section lists custom signals defined in `player.GD`:
 - `died` is emitted when the character just died. We will use it in a moment to hide the UI.
 - `took_damage` is emitted when the character got hit. 
 
-![We're connecting to the took_damage signal](took_damage_signal.png)
+![We're connecting to the took_damage signal](img/took_damage_signal.png)
 
 Select `took_damage` and click on the Connect button in the bottom right corner to open the Connect Signal window. On the left side you can pick the node that will listen to this signal. Select the `GUI` node. The right side of the screen lets you pack optional values with the signal. We already took care of it in `player.GD`. In general I recommend not to add too many arguments using this window as they're less convenient than doing it from the code.
 
-![The Connect Signal window with the GUI node selected](connect_signal_window_took_damage.png)
+![The Connect Signal window with the GUI node selected](img/connect_signal_window_took_damage.png)
 
 .. tip:: 
 
@@ -148,7 +148,7 @@ At the bottom of the window you will find the path to the node you selected. We'
 
 .. note:: When you connect nodes from the editor, Godot generates a method name with the following pattern: `_on_EmitterName_signal_name`. If you wrote the method already, the "Make Function" option will keep it. You may replace the name with anything you'd like.
 
-![Godot writes the callback method for you and takes you to it](godot_generates_signal_callback.png)
+![Godot writes the callback method for you and takes you to it](img/godot_generates_signal_callback.png)
 
 Inside the parens after the function name, add a `player_health` argument. When the player emits the `took_damage` signal it will send its current `health` alongside it. Your code should look like:
 
@@ -157,7 +157,7 @@ func _on_Player_took_damage(player_health):
     pass
 ```
 
-![In Player.gd, when the Player emits the took_damage signal, it also sends its health value](player_gd_emits_took_damage_code.png)
+![In Player.gd, when the Player emits the took_damage signal, it also sends its health value](img/player_gd_emits_took_damage_code.png)
 
 Inside `_on_Player_took_damage` let's call a second function called `update_health` and pass it the `player_health` variable.
 
@@ -189,7 +189,7 @@ func update_health(new_value):
 
 Also call `update_health` at the end of the `_ready` function to initialize the `Number` node's `text` with the right value at the start of the game. Press F5 to test the game: the life bar update with every attack!
 
-![Both the Number node and the TextureProgress update when the Player takes a hit](LifeBar_health_update_no_anim.gif)
+![Both the Number node and the TextureProgress update when the Player takes a hit](img/LifeBar_health_update_no_anim.gif)
 
 ## Animate the loss of life with the Tween node
 
@@ -274,7 +274,7 @@ func _process(delta):
 
 Play the game to see the `Bar` animate smoothly. But the text displays decimal number and looks like a mess. And considering the style of the game, it'd be nice for the life bar to animated in a choppier fashion. 
 
-![The animation is smooth but the number is broken](number_animation_messed_up.gif)
+![The animation is smooth but the number is broken](img/number_animation_messed_up.gif)
 
 We can fix both problems by rounding out `animated_health`. Use a local variable named `round_value` to store the rounded `animated_health`. Then assign it to `Number.text` and `Bar.value`:
 
@@ -287,7 +287,7 @@ func _process(delta):
 
 Try the game again to see a nice blocky animation.
 
-![By rounding out animated_health we hit two birds with one stone](number_animation_working.gif)
+![By rounding out animated_health we hit two birds with one stone](img/number_animation_working.gif)
 
 .. tip: 
 
@@ -302,11 +302,11 @@ First, the `GUI` needs to connect to the `Player`'s `died` signal to know when i
 
 Find the `died` signal, select it, and click the Connect button.
 
-![The signal should already have the Enemy connected to it](player_died_signal_enemy_connected.png)
+![The signal should already have the Enemy connected to it](img/player_died_signal_enemy_connected.png)
 
 In the Connecting Signal window, connect to the `GUI` node again. The Path to Node should be `../../GUI` and the Method in Node should show `_on_Player_died`. Leave the Make Function option on and click Connect at the bottom of the window. This will take you to the `GUI.gd` file in the Script Workspace.
 
-![You should get these values in the Connecting Signal window](player_died_connecting_signal_window.png)
+![You should get these values in the Connecting Signal window](img/player_died_connecting_signal_window.png)
 
 .. note:: 
 
@@ -347,7 +347,7 @@ func _on_Player_died():
 
 And that is it. You may now play the game to see the final result!
 
-![The final result. Congratulations for getting there!](final_result.gif)
+![The final result. Congratulations for getting there!](img/final_result.gif)
 
 .. note:: 
 

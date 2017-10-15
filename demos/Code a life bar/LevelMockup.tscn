@@ -31,6 +31,8 @@ _sections_unfolded = [ "Transform", "Z" ]
 
 [node name="Player" parent="Characters" instance=ExtResource( 3 )]
 
+_sections_unfolded = [ "Material", "Transform", "Visibility" ]
+
 [node name="Enemy" parent="Characters" instance=ExtResource( 4 )]
 
 [connection signal="died" from="Characters/Player" to="Characters/Enemy" method="_on_Player_died"]
