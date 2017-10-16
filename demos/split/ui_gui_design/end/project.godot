@@ -10,7 +10,7 @@ config_version=3
 
 [application]
 
-config/name="Code a life bar (src)"
+config/name="Design a GUI layout"
 run/main_scene="res://LevelMockup.tscn"
 config/icon="res://icon.png"
 
@@ -22,7 +22,3 @@ window/size/height=768
 [gdnative]
 
 singletons=[  ]
-
-[rendering]
-
-environment/default_environment="res://default_env.tres"

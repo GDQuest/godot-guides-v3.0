@@ -10,7 +10,7 @@ config_version=3
 
 [application]
 
-config/name="Code a life bar (src)"
+config/name="Code a life bar (start)"
 run/main_scene="res://LevelMockup.tscn"
 config/icon="res://icon.png"
 
