@@ -22,7 +22,7 @@ When you code a game, you want to build the core gameplay first: the main mechan
 
 Once the core gameplay and the UI are ready, you'll need to connect them somehow. In our example, we have the Enemy who attacks the Player at constant time intervals. We want the life bar to update when the Player takes damage.
 
-To do this, we will use **signals**. 
+To do this, we will use **signals**.
 
 .. note::
 
@@ -39,30 +39,30 @@ Download the Godot project. It contains all the assets and scripts you need to g
 
 Load the `tutorial/start` project in Godot. In the `FileSystem` dock double click on LevelMockup.tscn to open it. It's an RPG game's mockup where 2 characters face each other. The pink enemy attacks and damages the green square at regular time intervals, until its death. Feel free to try out the game: the basic combat mechanics already work. But as the character isn't connected to the life bar the `GUI` doesn't do anything.
 
-.. note:: 
+.. note::
 
     This is typical of how you'd code a game: you implement the core gameplay first, handle the player's death, and only then you'll add the interface. That's because the UI listens to what's happening in the game. So it can't work if other systems aren't in place yet.
     If you design the UI before you prototype and test the gameplay, chances are it won't work well and you'll have to re-create it from scratch.
 
 
-The scene contains a background sprite, a GUI, and two characters. 
+The scene contains a background sprite, a GUI, and two characters.
 
 ![The scene tree, with the GUI scene set to display its children](img/life_bar_step_tut_LevelMockup_scene_tree.png)
 
-The GUI scene encapsulates all of the Game User Interface. It comes with a barebones script where we get the path to nodes that exist inside the scene: 
+The GUI scene encapsulates all of the Game User Interface. It comes with a barebones script where we get the path to nodes that exist inside the scene:
 
 ```
-onready var Number = $Bars/LifeBar/Count/Background/Number
-onready var Bar = $Bars/LifeBar/TextureProgress
-onready var Tween = $Tween
+onready var number_label = $Bars/LifeBar/Count/Background/Number
+onready var bar = $Bars/LifeBar/TextureProgress
+onready var tween = $Tween
 ```
 
-- `Number` displays a life count as a number. It's a `Label` node
-- `Bar` is the life bar itself. It's a `TextureProgress` node
-- `Tween` is a component-style node that can animate and control any value or method from any other node
+- `number_label` displays a life count as a number. It's a `Label` node
+- `bar` is the life bar itself. It's a `TextureProgress` node
+- `tween` is a component-style node that can animate and control any value or method from any other node
 
 
-.. note:: 
+.. note::
 
     The project uses a simple organisation that works for game jams and tiny games.
     At the root of the project, in the `res://` folder, you will find the `LevelMockup`. That's the main game scene and the one we will work with. All the components that make up the game are in the `scenes/` folder. The `assets/` folder contains the game sprites and the font for the HP counter. In the `scripts/` folder you will find the enemy, the player, and the GUI controller scripts.
@@ -70,9 +70,9 @@ onready var Tween = $Tween
     ![The Player scene with Editable Children checked](img/Player_with_editable_children_on.png)
 
 
-## Set up the LifeBar with the Player's max\_health
+## Set up the Lifebar with the Player's max\_health
 
-We have to tell the GUI somehow what the player's current health is, to update the lifebar's texture, and to display the remaining health in the HP counter in the top left corner of the screen. To do this we send the player's health to the GUI every time he takes damage. The GUI will then update the `Lifebar` and `Number` nodes with this value. 
+We have to tell the GUI somehow what the player's current health is, to update the lifebar's texture, and to display the remaining health in the HP counter in the top left corner of the screen. To do this we send the player's health to the GUI every time he takes damage. The GUI will then update the `Lifebar` and `Number` nodes with this value.
 
 We could stop here to display the number, but we need to initialize the bar's `max_value` for it to update in the right proportions. The first step is thus to tell the `GUI` what the green character's `max_health` is.
 
@@ -82,42 +82,42 @@ We could stop here to display the number, but we need to initialize the bar's `m
     ![TextureProgress's Range section shows a max_value of 100 by default](img/TextureProgress_default_max_value.png)
 
 
-Click the script icon to the right of the `GUI` in the Scene dock to open its script. In the `_ready` function, we're going to store the `Player`'s `max_health` in a new variable and use it to set the `Bar`'s `max_value`:
+Click the script icon to the right of the `GUI` in the Scene dock to open its script. In the `_ready` function, we're going to store the `Player`'s `max_health` in a new variable and use it to set the `bar`'s `max_value`:
 
 ```
 func _ready():
 	var player_max_health = $"../Characters/Player".max_health
-    Bar.max_value = player_max_health
+    bar.max_value = player_max_health
 ```
 
 Let's break it down. `$"../Characters/Player"` is a shorthand that goes one node up in the scene tree, and retrieves the `Characters/Player` node from there. It gives us access to the node. The second part of the statement, `.max_health`, accesses the `max_health` on the Player node.
 
-The second line assigns this value to `Bar.max_value`. You could combine the two lines into one, but we'll need to use `player_max_health` again later in the tutorial.
+The second line assigns this value to `bar.max_value`. You could combine the two lines into one, but we'll need to use `player_max_health` again later in the tutorial.
 
 
 `Player.gd` sets the `health` to `max_health` at the start of the game, so we could work with this. Why do we still use `max_health`? There are two reasons:
 
-1. We don't have the guarantee that `health` will always equal `max_health`: a future version of the game may load a level where the player already lost some health. 
+1. We don't have the guarantee that `health` will always equal `max_health`: a future version of the game may load a level where the player already lost some health.
 2. Because `GUI` is higher than `Player` in the scene tree, Godot will call its `_ready` function first. If we got the `health` value then it would still be at `0`.
 
-.. note:: 
+.. note::
 
     When you open a scene in the game, Godot creates nodes one by one, following the order in your Scene dock, from top to bottom. `GUI` and `Player` are not part of the same node branch. To make sure they both exist when we access each other, we have to use the `_ready` function. Godot calls `_ready` right after it loaded all nodes, before the game starts. It's the perfect function to set everything up and prepare the game session.
     Learn more about _ready: :doc:`step_by_step/scripting_continued`
 
 ## Update health with a signal when the player takes a hit
 
-Our GUI is ready to receive the `health` value updates from the `Player`. To achieve this we're going to use **signals**. 
+Our GUI is ready to receive the `health` value updates from the `Player`. To achieve this we're going to use **signals**.
 
-.. note:: 
+.. note::
 
     There are many useful built-in signals like `enter_tree` and `exit_tree`, that all nodes emit when they are respectively created and destroyed. You can also create your own using the `signal` keyword. On the `Player` node, you'll find two signals we created for you: `died` and `took_damage`.
 
-Why don't we directly get the `Player` node in the `_process` function and look at the health value? Accessing nodes this way creates tight coupling between them. If you dio it sparingly it may work. As your game grows bigger, you may have many more connections. If you get nodes from a bad it's becomes very complex very soon. Not only that: you need to listen to the changes state constantly in the `_process` function. The check happens 60 times a second and you'll likely break the game because of the order in which the code runs. 
+Why don't we directly get the `Player` node in the `_process` function and look at the health value? Accessing nodes this way creates tight coupling between them. If you dio it sparingly it may work. As your game grows bigger, you may have many more connections. If you get nodes from a bad it's becomes very complex very soon. Not only that: you need to listen to the changes state constantly in the `_process` function. The check happens 60 times a second and you'll likely break the game because of the order in which the code runs.
 
 On a given frame you may look at another node's property *before* it was updated: you get a value that from the last frame. This leads to obscure bugs that are hard to fix. On the other hand, a signal is emitted right after a change happened. It **guarantees** you're getting a fresh piece of information. And you will update the state of your connected node *right after* the change happened.
 
-.. note:: 
+.. note::
 
     The Observer pattern, that signals derive from, still adds a bit of coupling between node branches. But it's generally lighter and more secure than accessing nodes directly to communicate between two separate classes. It can be okay for a parent node to get values from its children. But you'll want to favor signals if you're working with two separate branches.
     Read Game Programming Patterns for more information on the [ Observer pattern ](http://gameprogrammingpatterns.com/observer.html).
@@ -126,10 +126,10 @@ On a given frame you may look at another node's property *before* it was updated
 
 With this in mind let's connect the `GUI` to the `Player`. Click on the `Player` node in the scene dock to select it. Head down to the Inspector and click on the Node tab. This is the place to connect nodes to listen the one you selected.
 
-The first section lists custom signals defined in `player.GD`: 
+The first section lists custom signals defined in `player.GD`:
 
 - `died` is emitted when the character just died. We will use it in a moment to hide the UI.
-- `took_damage` is emitted when the character got hit. 
+- `took_damage` is emitted when the character got hit.
 
 ![We're connecting to the took_damage signal](img/took_damage_signal.png)
 
@@ -137,7 +137,7 @@ Select `took_damage` and click on the Connect button in the bottom right corner 
 
 ![The Connect Signal window with the GUI node selected](img/connect_signal_window_took_damage.png)
 
-.. tip:: 
+.. tip::
 
     You can optionally connect nodes from the code. But doing it from the editor has two advantages:
 
@@ -161,7 +161,7 @@ func _on_Player_took_damage(player_health):
 
 Inside `_on_Player_took_damage` let's call a second function called `update_health` and pass it the `player_health` variable.
 
-.. note:: 
+.. note::
 
     We could directly update the health value on `LifeBar` and `Number`. There are two reasons to use this method instead:
 
@@ -177,12 +177,12 @@ func update_health(new_value):
 This method needs to:
 
 - set the `Number` node's `text` to `new_value` converted to a string
-- set the `Bar`'s `value` to `new_value`
+- set the `TextureProgress`'s `value` to `new_value`
 
 ```
 func update_health(new_value):
-	Number.text = str(new_value)
-	Bar.value = new_value
+	number_label.text = str(new_value)
+	bar.value = new_value
 ```
 
 .. tip:: `str` is a built-in function that converts about any value to text. `Number`'s `text` property requires a string so we can't assign it to `new_value` directly
@@ -193,9 +193,9 @@ Also call `update_health` at the end of the `_ready` function to initialize the 
 
 ## Animate the loss of life with the Tween node
 
-Our interface is functional, but it could use some animation. That's a good opportunity to introduce the `Tween` node, an essential tool to animate properties. `Tween` animates anything you'd like from a start to an end state over a certain duration. For example it can animate the health on the `Bar` from its current level to the `Player`'s new `health` when the character takes damage.
+Our interface is functional, but it could use some animation. That's a good opportunity to introduce the `Tween` node, an essential tool to animate properties. `Tween` animates anything you'd like from a start to an end state over a certain duration. For example it can animate the health on the `TextureProgress` from its current level to the `Player`'s new `health` when the character takes damage.
 
-The `GUI` scene already contains a `Tween` child node stored in the `Tween` variable. Let's now use it. We have to make some changes to `update_health`. 
+The `GUI` scene already contains a `Tween` child node stored in the `tween` variable. Let's now use it. We have to make some changes to `update_health`.
 
 We will use the `Tween` node's `interpolate_property` method. It takes seven arguments:
 
@@ -216,16 +216,16 @@ At the top of the script, define a new variable and name it `animated_health`. N
 
 ```
 func update_health(new_value):
-	Tween.interpolate_property(self, "animated_health", animated_health, new_value, 0.6, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.interpolate_property(self, "animated_health", animated_health, new_value, 0.6, Tween.TRANS_LINEAR, Tween.EASE_IN)
 ```
 
-Let's break down the call: 
+Let's break down the call:
 
 ```
-Tween.interpolate_property(self, "animated_health", ...
+tween.interpolate_property(self, "animated_health", ...
 ```
 
-We target `animated_health` on `self`, that is to say the `GUI` node. `Tween`' interpolate_property takes the property's name as a string. That's why we write it as `"animated_health"`.
+We target `animated_health` on `self`, that is to say the `GUI` node. `Tween`'s interpolate_property takes the property's name as a string. That's why we write it as `"animated_health"`.
 
 
 ```
@@ -235,25 +235,25 @@ We target `animated_health` on `self`, that is to say the `GUI` node. `Tween`' i
 The starting point is the current value the bar's at. We still have to code this part, but it's going to be `animated_health`. The end point of the animation is the `Player`'s `health` after he `took_damage`: that's `new_value`. And `0.6` is the animation's duration in seconds.
 
 ```
-...  0.6, Tween.TRANS_LINEAR, Tween.EASE_IN)
+...  0.6, tween.TRANS_LINEAR, Tween.EASE_IN)
 ```
 
 The last two arguments are constants from the `Tween` class. `TRANS_LINEAR` means the animation should be linear. `EASE_IN` doesn't do anything with a linear transition, but we must provide this last argument or we'll get an error.
 
-The animation will not play until we activated the `Tween` node with `Tween.start()`. We only have to do this once if the node is not active. Add this code after the last line:
+The animation will not play until we activated the `Tween` node with `tween.start()`. We only have to do this once if the node is not active. Add this code after the last line:
 
 ```
-	if not Tween.is_active():
-		Tween.start()
+	if not tween.is_active():
+		tween.start()
 ```
 
-.. note:: 
+.. note::
 
-    Although we could animate the `health` property on the `Player`, we really shouldn't. Characters should lose life instantly when they get hit. It makes it a lot easier to manage their state, like to know when one died. You always want to store animations in a separate data container or node. The `Tween` node is perfect for code-controlled animations. For hand-made animations, check out `AnimationPlayer`.
+    Although we could animate the `health` property on the `Player`, we really shouldn't. Characters should lose life instantly when they get hit. It makes it a lot easier to manage their state, like to know when one died. You always want to store animations in a separate data container or node. The `tween` node is perfect for code-controlled animations. For hand-made animations, check out `AnimationPlayer`.
 
 ## Assign the animated_health to the LifeBar
 
-Now the `animated_health` variable animates but we don't update the actual `Bar` and `Number` anymore. Let's fix this.
+Now the `animated_health` variable animates but we don't update the actual `Bar` and `Number` nodes anymore. Let's fix this.
 
 So far, the update_health method looks like this:
 
@@ -264,34 +264,38 @@ func update_health(new_value):
 		Tween.start()
 ```
 
-In this specific case, because `Number` takes text, we need to use the `_process` method to animate it. Let's now update the `Number` and `Bar` nodes like before, inside of `_process`: 
+In this specific case, because `number_label` takes text, we need to use the `_process` method to animate it. Let's now update the `Number` and `TextureProgress` nodes like before, inside of `_process`:
 
 ```
 func _process(delta):
-	Number.text = str(animated_health)
-	Bar.value = animated_health
+	number_label.text = str(animated_health)
+	bar.value = animated_health
 ```
 
-Play the game to see the `Bar` animate smoothly. But the text displays decimal number and looks like a mess. And considering the style of the game, it'd be nice for the life bar to animated in a choppier fashion. 
+.. note::
+
+    `number_label` and `bar` are variables that store references to the `Number` and `TextureProgress` nodes.
+
+Play the game to see the bar animate smoothly. But the text displays decimal number and looks like a mess. And considering the style of the game, it'd be nice for the life bar to animate in a choppier fashion.
 
 ![The animation is smooth but the number is broken](img/number_animation_messed_up.gif)
 
-We can fix both problems by rounding out `animated_health`. Use a local variable named `round_value` to store the rounded `animated_health`. Then assign it to `Number.text` and `Bar.value`:
+We can fix both problems by rounding out `animated_health`. Use a local variable named `round_value` to store the rounded `animated_health`. Then assign it to `number_label.text` and `bar.value`:
 
 ```
 func _process(delta):
 	var round_value = round(animated_health)
-	Number.text = str(round_value)
-	Bar.value = round_value
+	number_label.text = str(round_value)
+	bar.value = round_value
 ```
 
 Try the game again to see a nice blocky animation.
 
 ![By rounding out animated_health we hit two birds with one stone](img/number_animation_working.gif)
 
-.. tip: 
+.. tip:
 
-    Every time the player takes a hit, the `GUI` calls `_on_Player_took_damage`, which in turn calls `update_health`. This updates the animation and the `Number` and `Bar` follow in `_process`.
+    Every time the player takes a hit, the `GUI` calls `_on_Player_took_damage`, which in turn calls `update_health`. This updates the animation and the `number_label` and `bar` follow in `_process`.
     The animated life bar that shows the health going down gradually is just a trick. It makes the GUI feel alive. If the `Player` takes 3 damage, it happens in an instant.
 
 ## Fade the bar when the Player dies
@@ -308,7 +312,7 @@ In the Connecting Signal window, connect to the `GUI` node again. The Path to No
 
 ![You should get these values in the Connecting Signal window](img/player_died_connecting_signal_window.png)
 
-.. note:: 
+.. note::
 
     You should see a pattern by now: every time the GUI needs a new piece of information, we emit a new signal. Use them wisely: the more connections you add, the harder they are to track.
 
@@ -332,7 +336,7 @@ func _on_Player_died():
 
 We then have to call the `interpolate_property` method of the `Tween` node again:
 
-```	
+```
 Tween.interpolate_property(self, "modulate", start_color, end_color, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN)
 ```
 
@@ -342,14 +346,14 @@ This time we change the `modulate` property and have it animate from `start_colo
 func _on_Player_died():
 	var start_color = Color(1.0, 1.0, 1.0, 1.0)
 	var end_color = Color(1.0, 1.0, 1.0, 0.0)
-	Tween.interpolate_property(self, "modulate", start_color, end_color, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.interpolate_property(self, "modulate", start_color, end_color, 1.0, Tween.TRANS_LINEAR, Tween.EASE_IN)
 ```
 
 And that is it. You may now play the game to see the final result!
 
 ![The final result. Congratulations for getting there!](img/final_result.gif)
 
-.. note:: 
+.. note::
 
     Using the exact same techniques, you can change the color of the bar when the Player gets poisoned, turn the bar red when its health drops low, shake the UI when he takes a critical hit... the principle is the same: emit a signal to forward the information from the `Player` to the `GUI` and let the `GUI` process it.
 

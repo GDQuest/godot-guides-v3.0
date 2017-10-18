@@ -5,8 +5,7 @@ var state = IDLE
 
 export var strength = 6
 
-onready var Player = $"../Player"
-onready var target = Player
+onready var target = $"../Player"
 
 
 func _on_Timer_timeout():

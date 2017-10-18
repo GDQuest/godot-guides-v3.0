@@ -1,8 +1,8 @@
 extends MarginContainer
 
-onready var Number = $Bars/LifeBar/Count/Background/Number
-onready var Bar = $Bars/LifeBar/TextureProgress
-onready var Tween = $Tween
+onready var number_label = $Bars/LifeBar/Count/Background/Number
+onready var bar = $Bars/LifeBar/TextureProgress
+onready var tween = $Tween
 
 func _ready():
 	pass
